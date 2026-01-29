@@ -25,7 +25,6 @@ export type AggregateAccount_verifications = {
 }
 
 export type Account_verificationsMinAggregateOutputType = {
-  id: string | null
   account_id: string | null
   is_verified: boolean | null
   token: string | null
@@ -35,7 +34,6 @@ export type Account_verificationsMinAggregateOutputType = {
 }
 
 export type Account_verificationsMaxAggregateOutputType = {
-  id: string | null
   account_id: string | null
   is_verified: boolean | null
   token: string | null
@@ -45,7 +43,6 @@ export type Account_verificationsMaxAggregateOutputType = {
 }
 
 export type Account_verificationsCountAggregateOutputType = {
-  id: number
   account_id: number
   is_verified: number
   token: number
@@ -57,7 +54,6 @@ export type Account_verificationsCountAggregateOutputType = {
 
 
 export type Account_verificationsMinAggregateInputType = {
-  id?: true
   account_id?: true
   is_verified?: true
   token?: true
@@ -67,7 +63,6 @@ export type Account_verificationsMinAggregateInputType = {
 }
 
 export type Account_verificationsMaxAggregateInputType = {
-  id?: true
   account_id?: true
   is_verified?: true
   token?: true
@@ -77,7 +72,6 @@ export type Account_verificationsMaxAggregateInputType = {
 }
 
 export type Account_verificationsCountAggregateInputType = {
-  id?: true
   account_id?: true
   is_verified?: true
   token?: true
@@ -160,7 +154,6 @@ export type account_verificationsGroupByArgs<ExtArgs extends runtime.Types.Exten
 }
 
 export type Account_verificationsGroupByOutputType = {
-  id: string
   account_id: string
   is_verified: boolean | null
   token: string | null
@@ -191,7 +184,6 @@ export type account_verificationsWhereInput = {
   AND?: Prisma.account_verificationsWhereInput | Prisma.account_verificationsWhereInput[]
   OR?: Prisma.account_verificationsWhereInput[]
   NOT?: Prisma.account_verificationsWhereInput | Prisma.account_verificationsWhereInput[]
-  id?: Prisma.UuidFilter<"account_verifications"> | string
   account_id?: Prisma.UuidFilter<"account_verifications"> | string
   is_verified?: Prisma.BoolNullableFilter<"account_verifications"> | boolean | null
   token?: Prisma.StringNullableFilter<"account_verifications"> | string | null
@@ -202,7 +194,6 @@ export type account_verificationsWhereInput = {
 }
 
 export type account_verificationsOrderByWithRelationInput = {
-  id?: Prisma.SortOrder
   account_id?: Prisma.SortOrder
   is_verified?: Prisma.SortOrderInput | Prisma.SortOrder
   token?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -213,7 +204,6 @@ export type account_verificationsOrderByWithRelationInput = {
 }
 
 export type account_verificationsWhereUniqueInput = Prisma.AtLeast<{
-  id?: string
   account_id?: string
   AND?: Prisma.account_verificationsWhereInput | Prisma.account_verificationsWhereInput[]
   OR?: Prisma.account_verificationsWhereInput[]
@@ -224,10 +214,9 @@ export type account_verificationsWhereUniqueInput = Prisma.AtLeast<{
   created_at?: Prisma.DateTimeNullableFilter<"account_verifications"> | Date | string | null
   updated_at?: Prisma.DateTimeNullableFilter<"account_verifications"> | Date | string | null
   accounts?: Prisma.XOR<Prisma.AccountsScalarRelationFilter, Prisma.accountsWhereInput>
-}, "id" | "account_id">
+}, "account_id">
 
 export type account_verificationsOrderByWithAggregationInput = {
-  id?: Prisma.SortOrder
   account_id?: Prisma.SortOrder
   is_verified?: Prisma.SortOrderInput | Prisma.SortOrder
   token?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -243,7 +232,6 @@ export type account_verificationsScalarWhereWithAggregatesInput = {
   AND?: Prisma.account_verificationsScalarWhereWithAggregatesInput | Prisma.account_verificationsScalarWhereWithAggregatesInput[]
   OR?: Prisma.account_verificationsScalarWhereWithAggregatesInput[]
   NOT?: Prisma.account_verificationsScalarWhereWithAggregatesInput | Prisma.account_verificationsScalarWhereWithAggregatesInput[]
-  id?: Prisma.UuidWithAggregatesFilter<"account_verifications"> | string
   account_id?: Prisma.UuidWithAggregatesFilter<"account_verifications"> | string
   is_verified?: Prisma.BoolNullableWithAggregatesFilter<"account_verifications"> | boolean | null
   token?: Prisma.StringNullableWithAggregatesFilter<"account_verifications"> | string | null
@@ -253,7 +241,6 @@ export type account_verificationsScalarWhereWithAggregatesInput = {
 }
 
 export type account_verificationsCreateInput = {
-  id?: string
   is_verified?: boolean | null
   token?: string | null
   expires_at?: Date | string | null
@@ -263,7 +250,6 @@ export type account_verificationsCreateInput = {
 }
 
 export type account_verificationsUncheckedCreateInput = {
-  id?: string
   account_id: string
   is_verified?: boolean | null
   token?: string | null
@@ -273,7 +259,6 @@ export type account_verificationsUncheckedCreateInput = {
 }
 
 export type account_verificationsUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   is_verified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   expires_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -283,7 +268,6 @@ export type account_verificationsUpdateInput = {
 }
 
 export type account_verificationsUncheckedUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   account_id?: Prisma.StringFieldUpdateOperationsInput | string
   is_verified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -293,7 +277,6 @@ export type account_verificationsUncheckedUpdateInput = {
 }
 
 export type account_verificationsCreateManyInput = {
-  id?: string
   account_id: string
   is_verified?: boolean | null
   token?: string | null
@@ -303,7 +286,6 @@ export type account_verificationsCreateManyInput = {
 }
 
 export type account_verificationsUpdateManyMutationInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   is_verified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   expires_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -312,7 +294,6 @@ export type account_verificationsUpdateManyMutationInput = {
 }
 
 export type account_verificationsUncheckedUpdateManyInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   account_id?: Prisma.StringFieldUpdateOperationsInput | string
   is_verified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -322,7 +303,6 @@ export type account_verificationsUncheckedUpdateManyInput = {
 }
 
 export type account_verificationsCountOrderByAggregateInput = {
-  id?: Prisma.SortOrder
   account_id?: Prisma.SortOrder
   is_verified?: Prisma.SortOrder
   token?: Prisma.SortOrder
@@ -332,7 +312,6 @@ export type account_verificationsCountOrderByAggregateInput = {
 }
 
 export type account_verificationsMaxOrderByAggregateInput = {
-  id?: Prisma.SortOrder
   account_id?: Prisma.SortOrder
   is_verified?: Prisma.SortOrder
   token?: Prisma.SortOrder
@@ -342,7 +321,6 @@ export type account_verificationsMaxOrderByAggregateInput = {
 }
 
 export type account_verificationsMinOrderByAggregateInput = {
-  id?: Prisma.SortOrder
   account_id?: Prisma.SortOrder
   is_verified?: Prisma.SortOrder
   token?: Prisma.SortOrder
@@ -356,10 +334,6 @@ export type Account_verificationsNullableScalarRelationFilter = {
   isNot?: Prisma.account_verificationsWhereInput | null
 }
 
-export type StringFieldUpdateOperationsInput = {
-  set?: string
-}
-
 export type NullableBoolFieldUpdateOperationsInput = {
   set?: boolean | null
 }
@@ -370,6 +344,10 @@ export type NullableStringFieldUpdateOperationsInput = {
 
 export type NullableDateTimeFieldUpdateOperationsInput = {
   set?: Date | string | null
+}
+
+export type StringFieldUpdateOperationsInput = {
+  set?: string
 }
 
 export type account_verificationsCreateNestedOneWithoutAccountsInput = {
@@ -405,7 +383,6 @@ export type account_verificationsUncheckedUpdateOneWithoutAccountsNestedInput = 
 }
 
 export type account_verificationsCreateWithoutAccountsInput = {
-  id?: string
   is_verified?: boolean | null
   token?: string | null
   expires_at?: Date | string | null
@@ -414,7 +391,6 @@ export type account_verificationsCreateWithoutAccountsInput = {
 }
 
 export type account_verificationsUncheckedCreateWithoutAccountsInput = {
-  id?: string
   is_verified?: boolean | null
   token?: string | null
   expires_at?: Date | string | null
@@ -439,7 +415,6 @@ export type account_verificationsUpdateToOneWithWhereWithoutAccountsInput = {
 }
 
 export type account_verificationsUpdateWithoutAccountsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   is_verified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   expires_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -448,7 +423,6 @@ export type account_verificationsUpdateWithoutAccountsInput = {
 }
 
 export type account_verificationsUncheckedUpdateWithoutAccountsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   is_verified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   token?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   expires_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -459,7 +433,6 @@ export type account_verificationsUncheckedUpdateWithoutAccountsInput = {
 
 
 export type account_verificationsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
-  id?: boolean
   account_id?: boolean
   is_verified?: boolean
   token?: boolean
@@ -470,7 +443,6 @@ export type account_verificationsSelect<ExtArgs extends runtime.Types.Extensions
 }, ExtArgs["result"]["account_verifications"]>
 
 export type account_verificationsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
-  id?: boolean
   account_id?: boolean
   is_verified?: boolean
   token?: boolean
@@ -481,7 +453,6 @@ export type account_verificationsSelectCreateManyAndReturn<ExtArgs extends runti
 }, ExtArgs["result"]["account_verifications"]>
 
 export type account_verificationsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
-  id?: boolean
   account_id?: boolean
   is_verified?: boolean
   token?: boolean
@@ -492,7 +463,6 @@ export type account_verificationsSelectUpdateManyAndReturn<ExtArgs extends runti
 }, ExtArgs["result"]["account_verifications"]>
 
 export type account_verificationsSelectScalar = {
-  id?: boolean
   account_id?: boolean
   is_verified?: boolean
   token?: boolean
@@ -501,7 +471,7 @@ export type account_verificationsSelectScalar = {
   updated_at?: boolean
 }
 
-export type account_verificationsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "account_id" | "is_verified" | "token" | "expires_at" | "created_at" | "updated_at", ExtArgs["result"]["account_verifications"]>
+export type account_verificationsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"account_id" | "is_verified" | "token" | "expires_at" | "created_at" | "updated_at", ExtArgs["result"]["account_verifications"]>
 export type account_verificationsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   accounts?: boolean | Prisma.accountsDefaultArgs<ExtArgs>
 }
@@ -518,7 +488,6 @@ export type $account_verificationsPayload<ExtArgs extends runtime.Types.Extensio
     accounts: Prisma.$accountsPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: string
     account_id: string
     is_verified: boolean | null
     token: string | null
@@ -608,8 +577,8 @@ export interface account_verificationsDelegate<ExtArgs extends runtime.Types.Ext
    * // Get first 10 Account_verifications
    * const account_verifications = await prisma.account_verifications.findMany({ take: 10 })
    * 
-   * // Only select the `id`
-   * const account_verificationsWithIdOnly = await prisma.account_verifications.findMany({ select: { id: true } })
+   * // Only select the `account_id`
+   * const account_verificationsWithAccount_idOnly = await prisma.account_verifications.findMany({ select: { account_id: true } })
    * 
    */
   findMany<T extends account_verificationsFindManyArgs>(args?: Prisma.SelectSubset<T, account_verificationsFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$account_verificationsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
@@ -653,9 +622,9 @@ export interface account_verificationsDelegate<ExtArgs extends runtime.Types.Ext
    *   ]
    * })
    * 
-   * // Create many Account_verifications and only return the `id`
-   * const account_verificationsWithIdOnly = await prisma.account_verifications.createManyAndReturn({
-   *   select: { id: true },
+   * // Create many Account_verifications and only return the `account_id`
+   * const account_verificationsWithAccount_idOnly = await prisma.account_verifications.createManyAndReturn({
+   *   select: { account_id: true },
    *   data: [
    *     // ... provide data here
    *   ]
@@ -744,9 +713,9 @@ export interface account_verificationsDelegate<ExtArgs extends runtime.Types.Ext
    *   ]
    * })
    * 
-   * // Update zero or more Account_verifications and only return the `id`
-   * const account_verificationsWithIdOnly = await prisma.account_verifications.updateManyAndReturn({
-   *   select: { id: true },
+   * // Update zero or more Account_verifications and only return the `account_id`
+   * const account_verificationsWithAccount_idOnly = await prisma.account_verifications.updateManyAndReturn({
+   *   select: { account_id: true },
    *   where: {
    *     // ... provide filter here
    *   },
@@ -949,7 +918,6 @@ export interface Prisma__account_verificationsClient<T, Null = never, ExtArgs ex
  * Fields of the account_verifications model
  */
 export interface account_verificationsFieldRefs {
-  readonly id: Prisma.FieldRef<"account_verifications", 'String'>
   readonly account_id: Prisma.FieldRef<"account_verifications", 'String'>
   readonly is_verified: Prisma.FieldRef<"account_verifications", 'Boolean'>
   readonly token: Prisma.FieldRef<"account_verifications", 'String'>

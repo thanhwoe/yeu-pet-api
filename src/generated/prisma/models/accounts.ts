@@ -210,8 +210,8 @@ export type accountsGroupByArgs<ExtArgs extends runtime.Types.Extensions.Interna
 export type AccountsGroupByOutputType = {
   id: string
   email: string | null
-  first_name: string
-  last_name: string
+  first_name: string | null
+  last_name: string | null
   password_hash: string
   phone: string
   avatar_url: string | null
@@ -249,8 +249,8 @@ export type accountsWhereInput = {
   NOT?: Prisma.accountsWhereInput | Prisma.accountsWhereInput[]
   id?: Prisma.UuidFilter<"accounts"> | string
   email?: Prisma.StringNullableFilter<"accounts"> | string | null
-  first_name?: Prisma.StringFilter<"accounts"> | string
-  last_name?: Prisma.StringFilter<"accounts"> | string
+  first_name?: Prisma.StringNullableFilter<"accounts"> | string | null
+  last_name?: Prisma.StringNullableFilter<"accounts"> | string | null
   password_hash?: Prisma.StringFilter<"accounts"> | string
   phone?: Prisma.StringFilter<"accounts"> | string
   avatar_url?: Prisma.StringNullableFilter<"accounts"> | string | null
@@ -269,8 +269,8 @@ export type accountsWhereInput = {
 export type accountsOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrderInput | Prisma.SortOrder
-  first_name?: Prisma.SortOrder
-  last_name?: Prisma.SortOrder
+  first_name?: Prisma.SortOrderInput | Prisma.SortOrder
+  last_name?: Prisma.SortOrderInput | Prisma.SortOrder
   password_hash?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   avatar_url?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -293,8 +293,8 @@ export type accountsWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.accountsWhereInput | Prisma.accountsWhereInput[]
   OR?: Prisma.accountsWhereInput[]
   NOT?: Prisma.accountsWhereInput | Prisma.accountsWhereInput[]
-  first_name?: Prisma.StringFilter<"accounts"> | string
-  last_name?: Prisma.StringFilter<"accounts"> | string
+  first_name?: Prisma.StringNullableFilter<"accounts"> | string | null
+  last_name?: Prisma.StringNullableFilter<"accounts"> | string | null
   password_hash?: Prisma.StringFilter<"accounts"> | string
   avatar_url?: Prisma.StringNullableFilter<"accounts"> | string | null
   role?: Prisma.Enumuser_roleFilter<"accounts"> | $Enums.user_role
@@ -312,8 +312,8 @@ export type accountsWhereUniqueInput = Prisma.AtLeast<{
 export type accountsOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrderInput | Prisma.SortOrder
-  first_name?: Prisma.SortOrder
-  last_name?: Prisma.SortOrder
+  first_name?: Prisma.SortOrderInput | Prisma.SortOrder
+  last_name?: Prisma.SortOrderInput | Prisma.SortOrder
   password_hash?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   avatar_url?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -336,8 +336,8 @@ export type accountsScalarWhereWithAggregatesInput = {
   NOT?: Prisma.accountsScalarWhereWithAggregatesInput | Prisma.accountsScalarWhereWithAggregatesInput[]
   id?: Prisma.UuidWithAggregatesFilter<"accounts"> | string
   email?: Prisma.StringNullableWithAggregatesFilter<"accounts"> | string | null
-  first_name?: Prisma.StringWithAggregatesFilter<"accounts"> | string
-  last_name?: Prisma.StringWithAggregatesFilter<"accounts"> | string
+  first_name?: Prisma.StringNullableWithAggregatesFilter<"accounts"> | string | null
+  last_name?: Prisma.StringNullableWithAggregatesFilter<"accounts"> | string | null
   password_hash?: Prisma.StringWithAggregatesFilter<"accounts"> | string
   phone?: Prisma.StringWithAggregatesFilter<"accounts"> | string
   avatar_url?: Prisma.StringNullableWithAggregatesFilter<"accounts"> | string | null
@@ -354,8 +354,8 @@ export type accountsScalarWhereWithAggregatesInput = {
 export type accountsCreateInput = {
   id?: string
   email?: string | null
-  first_name: string
-  last_name: string
+  first_name?: string | null
+  last_name?: string | null
   password_hash: string
   phone: string
   avatar_url?: string | null
@@ -374,8 +374,8 @@ export type accountsCreateInput = {
 export type accountsUncheckedCreateInput = {
   id?: string
   email?: string | null
-  first_name: string
-  last_name: string
+  first_name?: string | null
+  last_name?: string | null
   password_hash: string
   phone: string
   avatar_url?: string | null
@@ -394,8 +394,8 @@ export type accountsUncheckedCreateInput = {
 export type accountsUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
+  first_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  last_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password_hash?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -414,8 +414,8 @@ export type accountsUpdateInput = {
 export type accountsUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
+  first_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  last_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password_hash?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -434,8 +434,8 @@ export type accountsUncheckedUpdateInput = {
 export type accountsCreateManyInput = {
   id?: string
   email?: string | null
-  first_name: string
-  last_name: string
+  first_name?: string | null
+  last_name?: string | null
   password_hash: string
   phone: string
   avatar_url?: string | null
@@ -452,8 +452,8 @@ export type accountsCreateManyInput = {
 export type accountsUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
+  first_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  last_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password_hash?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -470,8 +470,8 @@ export type accountsUpdateManyMutationInput = {
 export type accountsUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
+  first_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  last_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password_hash?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -587,8 +587,8 @@ export type accountsUpdateOneRequiredWithoutRefresh_tokensNestedInput = {
 export type accountsCreateWithoutAccount_verificationsInput = {
   id?: string
   email?: string | null
-  first_name: string
-  last_name: string
+  first_name?: string | null
+  last_name?: string | null
   password_hash: string
   phone: string
   avatar_url?: string | null
@@ -606,8 +606,8 @@ export type accountsCreateWithoutAccount_verificationsInput = {
 export type accountsUncheckedCreateWithoutAccount_verificationsInput = {
   id?: string
   email?: string | null
-  first_name: string
-  last_name: string
+  first_name?: string | null
+  last_name?: string | null
   password_hash: string
   phone: string
   avatar_url?: string | null
@@ -641,8 +641,8 @@ export type accountsUpdateToOneWithWhereWithoutAccount_verificationsInput = {
 export type accountsUpdateWithoutAccount_verificationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
+  first_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  last_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password_hash?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -660,8 +660,8 @@ export type accountsUpdateWithoutAccount_verificationsInput = {
 export type accountsUncheckedUpdateWithoutAccount_verificationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
+  first_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  last_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password_hash?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -679,8 +679,8 @@ export type accountsUncheckedUpdateWithoutAccount_verificationsInput = {
 export type accountsCreateWithoutRefresh_tokensInput = {
   id?: string
   email?: string | null
-  first_name: string
-  last_name: string
+  first_name?: string | null
+  last_name?: string | null
   password_hash: string
   phone: string
   avatar_url?: string | null
@@ -698,8 +698,8 @@ export type accountsCreateWithoutRefresh_tokensInput = {
 export type accountsUncheckedCreateWithoutRefresh_tokensInput = {
   id?: string
   email?: string | null
-  first_name: string
-  last_name: string
+  first_name?: string | null
+  last_name?: string | null
   password_hash: string
   phone: string
   avatar_url?: string | null
@@ -733,8 +733,8 @@ export type accountsUpdateToOneWithWhereWithoutRefresh_tokensInput = {
 export type accountsUpdateWithoutRefresh_tokensInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
+  first_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  last_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password_hash?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -752,8 +752,8 @@ export type accountsUpdateWithoutRefresh_tokensInput = {
 export type accountsUncheckedUpdateWithoutRefresh_tokensInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  first_name?: Prisma.StringFieldUpdateOperationsInput | string
-  last_name?: Prisma.StringFieldUpdateOperationsInput | string
+  first_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  last_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password_hash?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -861,8 +861,8 @@ export type $accountsPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     email: string | null
-    first_name: string
-    last_name: string
+    first_name: string | null
+    last_name: string | null
     password_hash: string
     phone: string
     avatar_url: string | null

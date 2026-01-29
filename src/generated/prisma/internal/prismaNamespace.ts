@@ -668,7 +668,6 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 
 
 export const Account_verificationsScalarFieldEnum = {
-  id: 'id',
   account_id: 'account_id',
   is_verified: 'is_verified',
   token: 'token',

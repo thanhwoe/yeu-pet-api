@@ -18,6 +18,11 @@ export class PrismaService extends PrismaClient {
         { level: 'error', emit: 'stdout' },
         { level: 'warn', emit: 'stdout' },
       ],
+      omit: {
+        accounts: {
+          password_hash: true,
+        },
+      },
     });
 
     if (configService.getOrThrow<string>('NODE_ENV') === 'development') {

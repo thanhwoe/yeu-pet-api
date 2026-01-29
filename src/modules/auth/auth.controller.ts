@@ -1,7 +1,74 @@
-import { Controller } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Post,
+  Request,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
+import { RegisterDto } from './dto/register.dto';
+import { LocalAuthGuard } from './guards/local-auth.guard';
+import type { accounts } from '@app/generated/prisma/client';
+import { RefreshTokenDto } from './dto/refresh-tokens.dto';
+import { LogoutDto } from './dto/logout.dto';
+import { CurrentUser } from './decorators/current-user.decorator';
+import { Public } from './decorators/public.decorator';
+import { AdminOnly } from './decorators/admin.decorator';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
+
+  @Post('register')
+  @Public()
+  @HttpCode(HttpStatus.CREATED)
+  async register(@Body() registerDto: RegisterDto) {
+    return this.authService.register(registerDto);
+  }
+
+  @UseGuards(LocalAuthGuard)
+  @Post('login')
+  @Public()
+  @HttpCode(HttpStatus.OK)
+  async login(@Request() req: { user: accounts }) {
+    return this.authService.login(req.user);
+  }
+
+  @Post('logout')
+  @HttpCode(HttpStatus.OK)
+  async logout(@CurrentUser() user: accounts, @Body() logoutDto: LogoutDto) {
+    await this.authService.logout(user.id, logoutDto.refreshToken);
+
+    return { message: 'Logged out successfully' };
+  }
+
+  @Post('refresh-token')
+  @Public()
+  @HttpCode(HttpStatus.OK)
+  async refreshTokens(
+    @CurrentUser() user: accounts,
+    @Body() refreshTokenDto: RefreshTokenDto,
+  ) {
+    return this.authService.refreshTokens(
+      user.id,
+      refreshTokenDto.refreshToken,
+    );
+  }
+
+  @Get('profile')
+  @HttpCode(HttpStatus.OK)
+  getProfile(@Request() req: { user: accounts }) {
+    return {
+      user: req.user,
+    };
+  }
+
+  @Get('health')
+  @AdminOnly()
+  healthCheck() {
+    return { status: 'ok' };
+  }
 }
