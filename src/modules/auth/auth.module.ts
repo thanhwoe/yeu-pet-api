@@ -5,11 +5,11 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UsersModule } from '../users/users.module';
-import { LocalStrategy } from './strategies/local.strategy';
-import { JwtStrategy } from './strategies/jwt.strategy';
 import { RefreshTokensRepository } from './refresh-tokens.repository';
 import { ScheduleModule } from '@nestjs/schedule';
 import { CleanupTokensTask } from './tasks/cleanup-tokens.task';
+import { LocalStrategy } from '@app/strategies/local.strategy';
+import { JwtStrategy } from '@app/strategies/jwt.strategy';
 
 @Module({
   imports: [

@@ -6,13 +6,13 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { firstValueFrom } from 'rxjs';
-import { IS_PUBLIC_KEY } from '../decorators/public.decorator';
 import { Reflector } from '@nestjs/core';
-import { REQUIRED_ROLE_KEY } from '../decorators/admin.decorator';
 import { Request } from 'express';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { IJwtPayload } from '@app/types/jwt';
+import { IS_PUBLIC_KEY } from '@app/decorators/public.decorator';
+import { REQUIRED_ROLE_KEY } from '@app/decorators/admin.decorator';
 
 @Injectable()
 export class JwtAuthGuard extends AuthGuard('jwt') {

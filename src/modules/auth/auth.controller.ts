@@ -10,13 +10,13 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
-import { LocalAuthGuard } from './guards/local-auth.guard';
 import type { accounts } from '@app/generated/prisma/client';
 import { RefreshTokenDto } from './dto/refresh-tokens.dto';
 import { LogoutDto } from './dto/logout.dto';
-import { CurrentUser } from './decorators/current-user.decorator';
-import { Public } from './decorators/public.decorator';
-import { AdminOnly } from './decorators/admin.decorator';
+import { Public } from '@app/decorators/public.decorator';
+import { CurrentUser } from '@app/decorators/current-user.decorator';
+import { AdminOnly } from '@app/decorators/admin.decorator';
+import { LocalAuthGuard } from '@app/guards/local-auth.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -56,14 +56,6 @@ export class AuthController {
       user.id,
       refreshTokenDto.refreshToken,
     );
-  }
-
-  @Get('profile')
-  @HttpCode(HttpStatus.OK)
-  getProfile(@Request() req: { user: accounts }) {
-    return {
-      user: req.user,
-    };
   }
 
   @Get('health')

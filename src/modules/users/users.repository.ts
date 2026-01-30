@@ -110,4 +110,26 @@ export class UsersRepository implements IUsersRepository {
       data: { password_hash: hashedPassword },
     });
   }
+
+  async profile(id: string) {
+    const user = await this.prisma.accounts.findUnique({
+      where: { id },
+      include: {
+        account_verifications: {
+          select: {
+            is_verified: true,
+          },
+        },
+      },
+    });
+
+    if (!user) return null;
+
+    const { account_verifications, ...rest } = user;
+
+    return {
+      ...rest,
+      is_verified: account_verifications?.is_verified ?? false,
+    };
+  }
 }

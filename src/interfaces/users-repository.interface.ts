@@ -10,4 +10,7 @@ export interface IUsersRepository extends IBaseRepository<
   existsByEmail(email: string): Promise<boolean>;
   existsByPhone(phone: string): Promise<boolean>;
   updatePassword(id: string, hashedPassword: string): Promise<accounts>;
+  profile: (
+    id: string,
+  ) => Promise<(accounts & { is_verified: boolean }) | null>;
 }
