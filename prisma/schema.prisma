@@ -8,35 +8,24 @@ datasource db {
   provider = "postgresql"
 }
 
-model account_verifications {
-  account_id  String    @id @db.Uuid
-  is_verified Boolean?  @default(false)
-  token       String?
-  expires_at  DateTime? @db.Timestamptz(6)
-  created_at  DateTime? @default(now()) @db.Timestamptz(6)
-  updated_at  DateTime? @default(now()) @db.Timestamptz(6)
-  accounts    accounts  @relation(fields: [account_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_account_verifications_account_id")
-
-  @@index([account_id], map: "idx_account_verifications_account_id")
-}
-
 model accounts {
-  id                      String                 @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  email                   String?                @unique @db.VarChar(255)
-  first_name              String?                @db.VarChar(255)
-  last_name               String?                @db.VarChar(255)
-  password_hash           String                 @db.VarChar(255)
-  phone                   String                 @unique @db.VarChar(20)
+  id                      String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  email                   String?           @unique @db.VarChar(255)
+  first_name              String?           @db.VarChar(255)
+  last_name               String?           @db.VarChar(255)
+  password_hash           String            @db.VarChar(255)
+  phone                   String            @unique @db.VarChar(20)
   avatar_url              String?
-  role                    user_role              @default(user)
-  onboarding_completed    Boolean                @default(false)
-  subscription            subscription_tier      @default(free)
-  subscription_expires_at DateTime?              @db.Timestamptz(6)
-  last_sign_in_at         DateTime?              @db.Timestamptz(6)
-  created_at              DateTime?              @default(now()) @db.Timestamptz(6)
-  updated_at              DateTime?              @default(now()) @db.Timestamptz(6)
-  is_active               Boolean?               @default(true)
-  account_verifications   account_verifications?
+  role                    user_role         @default(user)
+  onboarding_completed    Boolean           @default(false)
+  subscription            subscription_tier @default(free)
+  subscription_expires_at DateTime?         @db.Timestamptz(6)
+  is_active               Boolean?          @default(true)
+  is_verified             Boolean?          @default(false)
+  last_sign_in_at         DateTime?         @db.Timestamptz(6)
+  created_at              DateTime?         @default(now()) @db.Timestamptz(6)
+  updated_at              DateTime?         @default(now()) @db.Timestamptz(6)
+  otp_tokens              otp_tokens?
   refresh_tokens          refresh_tokens[]
 
   @@index([email], map: "idx_accounts_email")
@@ -54,6 +43,17 @@ model refresh_tokens {
   accounts   accounts  @relation(fields: [account_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_refresh_tokens_account_id")
 
   @@index([token_hash], map: "idx_refresh_tokens_token_hash")
+}
+
+model otp_tokens {
+  account_id String    @id @db.Uuid
+  token      String?
+  expires_at DateTime? @db.Timestamptz(6)
+  created_at DateTime? @default(now()) @db.Timestamptz(6)
+  updated_at DateTime? @default(now()) @db.Timestamptz(6)
+  accounts   accounts  @relation(fields: [account_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_otp_tokens_account_id")
+
+  @@index([account_id], map: "idx_otp_tokens_account_id")
 }
 
 enum subscription_tier {

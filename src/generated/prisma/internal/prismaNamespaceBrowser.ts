@@ -51,9 +51,9 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
-  account_verifications: 'account_verifications',
   accounts: 'accounts',
-  refresh_tokens: 'refresh_tokens'
+  refresh_tokens: 'refresh_tokens',
+  otp_tokens: 'otp_tokens'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -72,18 +72,6 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
-export const Account_verificationsScalarFieldEnum = {
-  account_id: 'account_id',
-  is_verified: 'is_verified',
-  token: 'token',
-  expires_at: 'expires_at',
-  created_at: 'created_at',
-  updated_at: 'updated_at'
-} as const
-
-export type Account_verificationsScalarFieldEnum = (typeof Account_verificationsScalarFieldEnum)[keyof typeof Account_verificationsScalarFieldEnum]
-
-
 export const AccountsScalarFieldEnum = {
   id: 'id',
   email: 'email',
@@ -97,6 +85,7 @@ export const AccountsScalarFieldEnum = {
   subscription: 'subscription',
   subscription_expires_at: 'subscription_expires_at',
   is_active: 'is_active',
+  is_verified: 'is_verified',
   last_sign_in_at: 'last_sign_in_at',
   created_at: 'created_at',
   updated_at: 'updated_at'
@@ -116,6 +105,17 @@ export const Refresh_tokensScalarFieldEnum = {
 } as const
 
 export type Refresh_tokensScalarFieldEnum = (typeof Refresh_tokensScalarFieldEnum)[keyof typeof Refresh_tokensScalarFieldEnum]
+
+
+export const Otp_tokensScalarFieldEnum = {
+  account_id: 'account_id',
+  token: 'token',
+  expires_at: 'expires_at',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type Otp_tokensScalarFieldEnum = (typeof Otp_tokensScalarFieldEnum)[keyof typeof Otp_tokensScalarFieldEnum]
 
 
 export const SortOrder = {

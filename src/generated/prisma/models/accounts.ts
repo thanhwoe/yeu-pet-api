@@ -37,6 +37,7 @@ export type AccountsMinAggregateOutputType = {
   subscription: $Enums.subscription_tier | null
   subscription_expires_at: Date | null
   is_active: boolean | null
+  is_verified: boolean | null
   last_sign_in_at: Date | null
   created_at: Date | null
   updated_at: Date | null
@@ -55,6 +56,7 @@ export type AccountsMaxAggregateOutputType = {
   subscription: $Enums.subscription_tier | null
   subscription_expires_at: Date | null
   is_active: boolean | null
+  is_verified: boolean | null
   last_sign_in_at: Date | null
   created_at: Date | null
   updated_at: Date | null
@@ -73,6 +75,7 @@ export type AccountsCountAggregateOutputType = {
   subscription: number
   subscription_expires_at: number
   is_active: number
+  is_verified: number
   last_sign_in_at: number
   created_at: number
   updated_at: number
@@ -93,6 +96,7 @@ export type AccountsMinAggregateInputType = {
   subscription?: true
   subscription_expires_at?: true
   is_active?: true
+  is_verified?: true
   last_sign_in_at?: true
   created_at?: true
   updated_at?: true
@@ -111,6 +115,7 @@ export type AccountsMaxAggregateInputType = {
   subscription?: true
   subscription_expires_at?: true
   is_active?: true
+  is_verified?: true
   last_sign_in_at?: true
   created_at?: true
   updated_at?: true
@@ -129,6 +134,7 @@ export type AccountsCountAggregateInputType = {
   subscription?: true
   subscription_expires_at?: true
   is_active?: true
+  is_verified?: true
   last_sign_in_at?: true
   created_at?: true
   updated_at?: true
@@ -220,6 +226,7 @@ export type AccountsGroupByOutputType = {
   subscription: $Enums.subscription_tier
   subscription_expires_at: Date | null
   is_active: boolean | null
+  is_verified: boolean | null
   last_sign_in_at: Date | null
   created_at: Date | null
   updated_at: Date | null
@@ -259,11 +266,12 @@ export type accountsWhereInput = {
   subscription?: Prisma.Enumsubscription_tierFilter<"accounts"> | $Enums.subscription_tier
   subscription_expires_at?: Prisma.DateTimeNullableFilter<"accounts"> | Date | string | null
   is_active?: Prisma.BoolNullableFilter<"accounts"> | boolean | null
+  is_verified?: Prisma.BoolNullableFilter<"accounts"> | boolean | null
   last_sign_in_at?: Prisma.DateTimeNullableFilter<"accounts"> | Date | string | null
   created_at?: Prisma.DateTimeNullableFilter<"accounts"> | Date | string | null
   updated_at?: Prisma.DateTimeNullableFilter<"accounts"> | Date | string | null
-  account_verifications?: Prisma.XOR<Prisma.Account_verificationsNullableScalarRelationFilter, Prisma.account_verificationsWhereInput> | null
-  refresh_tokens?: Prisma.XOR<Prisma.Refresh_tokensNullableScalarRelationFilter, Prisma.refresh_tokensWhereInput> | null
+  otp_tokens?: Prisma.XOR<Prisma.Otp_tokensNullableScalarRelationFilter, Prisma.otp_tokensWhereInput> | null
+  refresh_tokens?: Prisma.Refresh_tokensListRelationFilter
 }
 
 export type accountsOrderByWithRelationInput = {
@@ -279,11 +287,12 @@ export type accountsOrderByWithRelationInput = {
   subscription?: Prisma.SortOrder
   subscription_expires_at?: Prisma.SortOrderInput | Prisma.SortOrder
   is_active?: Prisma.SortOrderInput | Prisma.SortOrder
+  is_verified?: Prisma.SortOrderInput | Prisma.SortOrder
   last_sign_in_at?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrderInput | Prisma.SortOrder
   updated_at?: Prisma.SortOrderInput | Prisma.SortOrder
-  account_verifications?: Prisma.account_verificationsOrderByWithRelationInput
-  refresh_tokens?: Prisma.refresh_tokensOrderByWithRelationInput
+  otp_tokens?: Prisma.otp_tokensOrderByWithRelationInput
+  refresh_tokens?: Prisma.refresh_tokensOrderByRelationAggregateInput
 }
 
 export type accountsWhereUniqueInput = Prisma.AtLeast<{
@@ -302,11 +311,12 @@ export type accountsWhereUniqueInput = Prisma.AtLeast<{
   subscription?: Prisma.Enumsubscription_tierFilter<"accounts"> | $Enums.subscription_tier
   subscription_expires_at?: Prisma.DateTimeNullableFilter<"accounts"> | Date | string | null
   is_active?: Prisma.BoolNullableFilter<"accounts"> | boolean | null
+  is_verified?: Prisma.BoolNullableFilter<"accounts"> | boolean | null
   last_sign_in_at?: Prisma.DateTimeNullableFilter<"accounts"> | Date | string | null
   created_at?: Prisma.DateTimeNullableFilter<"accounts"> | Date | string | null
   updated_at?: Prisma.DateTimeNullableFilter<"accounts"> | Date | string | null
-  account_verifications?: Prisma.XOR<Prisma.Account_verificationsNullableScalarRelationFilter, Prisma.account_verificationsWhereInput> | null
-  refresh_tokens?: Prisma.XOR<Prisma.Refresh_tokensNullableScalarRelationFilter, Prisma.refresh_tokensWhereInput> | null
+  otp_tokens?: Prisma.XOR<Prisma.Otp_tokensNullableScalarRelationFilter, Prisma.otp_tokensWhereInput> | null
+  refresh_tokens?: Prisma.Refresh_tokensListRelationFilter
 }, "id" | "email" | "phone">
 
 export type accountsOrderByWithAggregationInput = {
@@ -322,6 +332,7 @@ export type accountsOrderByWithAggregationInput = {
   subscription?: Prisma.SortOrder
   subscription_expires_at?: Prisma.SortOrderInput | Prisma.SortOrder
   is_active?: Prisma.SortOrderInput | Prisma.SortOrder
+  is_verified?: Prisma.SortOrderInput | Prisma.SortOrder
   last_sign_in_at?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrderInput | Prisma.SortOrder
   updated_at?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -346,6 +357,7 @@ export type accountsScalarWhereWithAggregatesInput = {
   subscription?: Prisma.Enumsubscription_tierWithAggregatesFilter<"accounts"> | $Enums.subscription_tier
   subscription_expires_at?: Prisma.DateTimeNullableWithAggregatesFilter<"accounts"> | Date | string | null
   is_active?: Prisma.BoolNullableWithAggregatesFilter<"accounts"> | boolean | null
+  is_verified?: Prisma.BoolNullableWithAggregatesFilter<"accounts"> | boolean | null
   last_sign_in_at?: Prisma.DateTimeNullableWithAggregatesFilter<"accounts"> | Date | string | null
   created_at?: Prisma.DateTimeNullableWithAggregatesFilter<"accounts"> | Date | string | null
   updated_at?: Prisma.DateTimeNullableWithAggregatesFilter<"accounts"> | Date | string | null
@@ -364,11 +376,12 @@ export type accountsCreateInput = {
   subscription?: $Enums.subscription_tier
   subscription_expires_at?: Date | string | null
   is_active?: boolean | null
+  is_verified?: boolean | null
   last_sign_in_at?: Date | string | null
   created_at?: Date | string | null
   updated_at?: Date | string | null
-  account_verifications?: Prisma.account_verificationsCreateNestedOneWithoutAccountsInput
-  refresh_tokens?: Prisma.refresh_tokensCreateNestedOneWithoutAccountsInput
+  otp_tokens?: Prisma.otp_tokensCreateNestedOneWithoutAccountsInput
+  refresh_tokens?: Prisma.refresh_tokensCreateNestedManyWithoutAccountsInput
 }
 
 export type accountsUncheckedCreateInput = {
@@ -384,11 +397,12 @@ export type accountsUncheckedCreateInput = {
   subscription?: $Enums.subscription_tier
   subscription_expires_at?: Date | string | null
   is_active?: boolean | null
+  is_verified?: boolean | null
   last_sign_in_at?: Date | string | null
   created_at?: Date | string | null
   updated_at?: Date | string | null
-  account_verifications?: Prisma.account_verificationsUncheckedCreateNestedOneWithoutAccountsInput
-  refresh_tokens?: Prisma.refresh_tokensUncheckedCreateNestedOneWithoutAccountsInput
+  otp_tokens?: Prisma.otp_tokensUncheckedCreateNestedOneWithoutAccountsInput
+  refresh_tokens?: Prisma.refresh_tokensUncheckedCreateNestedManyWithoutAccountsInput
 }
 
 export type accountsUpdateInput = {
@@ -404,11 +418,12 @@ export type accountsUpdateInput = {
   subscription?: Prisma.Enumsubscription_tierFieldUpdateOperationsInput | $Enums.subscription_tier
   subscription_expires_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_active?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  is_verified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   last_sign_in_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  account_verifications?: Prisma.account_verificationsUpdateOneWithoutAccountsNestedInput
-  refresh_tokens?: Prisma.refresh_tokensUpdateOneWithoutAccountsNestedInput
+  otp_tokens?: Prisma.otp_tokensUpdateOneWithoutAccountsNestedInput
+  refresh_tokens?: Prisma.refresh_tokensUpdateManyWithoutAccountsNestedInput
 }
 
 export type accountsUncheckedUpdateInput = {
@@ -424,11 +439,12 @@ export type accountsUncheckedUpdateInput = {
   subscription?: Prisma.Enumsubscription_tierFieldUpdateOperationsInput | $Enums.subscription_tier
   subscription_expires_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_active?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  is_verified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   last_sign_in_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  account_verifications?: Prisma.account_verificationsUncheckedUpdateOneWithoutAccountsNestedInput
-  refresh_tokens?: Prisma.refresh_tokensUncheckedUpdateOneWithoutAccountsNestedInput
+  otp_tokens?: Prisma.otp_tokensUncheckedUpdateOneWithoutAccountsNestedInput
+  refresh_tokens?: Prisma.refresh_tokensUncheckedUpdateManyWithoutAccountsNestedInput
 }
 
 export type accountsCreateManyInput = {
@@ -444,6 +460,7 @@ export type accountsCreateManyInput = {
   subscription?: $Enums.subscription_tier
   subscription_expires_at?: Date | string | null
   is_active?: boolean | null
+  is_verified?: boolean | null
   last_sign_in_at?: Date | string | null
   created_at?: Date | string | null
   updated_at?: Date | string | null
@@ -462,6 +479,7 @@ export type accountsUpdateManyMutationInput = {
   subscription?: Prisma.Enumsubscription_tierFieldUpdateOperationsInput | $Enums.subscription_tier
   subscription_expires_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_active?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  is_verified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   last_sign_in_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -480,14 +498,10 @@ export type accountsUncheckedUpdateManyInput = {
   subscription?: Prisma.Enumsubscription_tierFieldUpdateOperationsInput | $Enums.subscription_tier
   subscription_expires_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_active?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  is_verified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   last_sign_in_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-}
-
-export type AccountsScalarRelationFilter = {
-  is?: Prisma.accountsWhereInput
-  isNot?: Prisma.accountsWhereInput
 }
 
 export type accountsCountOrderByAggregateInput = {
@@ -503,6 +517,7 @@ export type accountsCountOrderByAggregateInput = {
   subscription?: Prisma.SortOrder
   subscription_expires_at?: Prisma.SortOrder
   is_active?: Prisma.SortOrder
+  is_verified?: Prisma.SortOrder
   last_sign_in_at?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
@@ -521,6 +536,7 @@ export type accountsMaxOrderByAggregateInput = {
   subscription?: Prisma.SortOrder
   subscription_expires_at?: Prisma.SortOrder
   is_active?: Prisma.SortOrder
+  is_verified?: Prisma.SortOrder
   last_sign_in_at?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
@@ -539,23 +555,23 @@ export type accountsMinOrderByAggregateInput = {
   subscription?: Prisma.SortOrder
   subscription_expires_at?: Prisma.SortOrder
   is_active?: Prisma.SortOrder
+  is_verified?: Prisma.SortOrder
   last_sign_in_at?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
 }
 
-export type accountsCreateNestedOneWithoutAccount_verificationsInput = {
-  create?: Prisma.XOR<Prisma.accountsCreateWithoutAccount_verificationsInput, Prisma.accountsUncheckedCreateWithoutAccount_verificationsInput>
-  connectOrCreate?: Prisma.accountsCreateOrConnectWithoutAccount_verificationsInput
-  connect?: Prisma.accountsWhereUniqueInput
+export type AccountsScalarRelationFilter = {
+  is?: Prisma.accountsWhereInput
+  isNot?: Prisma.accountsWhereInput
 }
 
-export type accountsUpdateOneRequiredWithoutAccount_verificationsNestedInput = {
-  create?: Prisma.XOR<Prisma.accountsCreateWithoutAccount_verificationsInput, Prisma.accountsUncheckedCreateWithoutAccount_verificationsInput>
-  connectOrCreate?: Prisma.accountsCreateOrConnectWithoutAccount_verificationsInput
-  upsert?: Prisma.accountsUpsertWithoutAccount_verificationsInput
-  connect?: Prisma.accountsWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.accountsUpdateToOneWithWhereWithoutAccount_verificationsInput, Prisma.accountsUpdateWithoutAccount_verificationsInput>, Prisma.accountsUncheckedUpdateWithoutAccount_verificationsInput>
+export type StringFieldUpdateOperationsInput = {
+  set?: string
+}
+
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: string | null
 }
 
 export type Enumuser_roleFieldUpdateOperationsInput = {
@@ -568,6 +584,14 @@ export type BoolFieldUpdateOperationsInput = {
 
 export type Enumsubscription_tierFieldUpdateOperationsInput = {
   set?: $Enums.subscription_tier
+}
+
+export type NullableDateTimeFieldUpdateOperationsInput = {
+  set?: Date | string | null
+}
+
+export type NullableBoolFieldUpdateOperationsInput = {
+  set?: boolean | null
 }
 
 export type accountsCreateNestedOneWithoutRefresh_tokensInput = {
@@ -584,96 +608,18 @@ export type accountsUpdateOneRequiredWithoutRefresh_tokensNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.accountsUpdateToOneWithWhereWithoutRefresh_tokensInput, Prisma.accountsUpdateWithoutRefresh_tokensInput>, Prisma.accountsUncheckedUpdateWithoutRefresh_tokensInput>
 }
 
-export type accountsCreateWithoutAccount_verificationsInput = {
-  id?: string
-  email?: string | null
-  first_name?: string | null
-  last_name?: string | null
-  password_hash: string
-  phone: string
-  avatar_url?: string | null
-  role?: $Enums.user_role
-  onboarding_completed?: boolean
-  subscription?: $Enums.subscription_tier
-  subscription_expires_at?: Date | string | null
-  is_active?: boolean | null
-  last_sign_in_at?: Date | string | null
-  created_at?: Date | string | null
-  updated_at?: Date | string | null
-  refresh_tokens?: Prisma.refresh_tokensCreateNestedOneWithoutAccountsInput
+export type accountsCreateNestedOneWithoutOtp_tokensInput = {
+  create?: Prisma.XOR<Prisma.accountsCreateWithoutOtp_tokensInput, Prisma.accountsUncheckedCreateWithoutOtp_tokensInput>
+  connectOrCreate?: Prisma.accountsCreateOrConnectWithoutOtp_tokensInput
+  connect?: Prisma.accountsWhereUniqueInput
 }
 
-export type accountsUncheckedCreateWithoutAccount_verificationsInput = {
-  id?: string
-  email?: string | null
-  first_name?: string | null
-  last_name?: string | null
-  password_hash: string
-  phone: string
-  avatar_url?: string | null
-  role?: $Enums.user_role
-  onboarding_completed?: boolean
-  subscription?: $Enums.subscription_tier
-  subscription_expires_at?: Date | string | null
-  is_active?: boolean | null
-  last_sign_in_at?: Date | string | null
-  created_at?: Date | string | null
-  updated_at?: Date | string | null
-  refresh_tokens?: Prisma.refresh_tokensUncheckedCreateNestedOneWithoutAccountsInput
-}
-
-export type accountsCreateOrConnectWithoutAccount_verificationsInput = {
-  where: Prisma.accountsWhereUniqueInput
-  create: Prisma.XOR<Prisma.accountsCreateWithoutAccount_verificationsInput, Prisma.accountsUncheckedCreateWithoutAccount_verificationsInput>
-}
-
-export type accountsUpsertWithoutAccount_verificationsInput = {
-  update: Prisma.XOR<Prisma.accountsUpdateWithoutAccount_verificationsInput, Prisma.accountsUncheckedUpdateWithoutAccount_verificationsInput>
-  create: Prisma.XOR<Prisma.accountsCreateWithoutAccount_verificationsInput, Prisma.accountsUncheckedCreateWithoutAccount_verificationsInput>
-  where?: Prisma.accountsWhereInput
-}
-
-export type accountsUpdateToOneWithWhereWithoutAccount_verificationsInput = {
-  where?: Prisma.accountsWhereInput
-  data: Prisma.XOR<Prisma.accountsUpdateWithoutAccount_verificationsInput, Prisma.accountsUncheckedUpdateWithoutAccount_verificationsInput>
-}
-
-export type accountsUpdateWithoutAccount_verificationsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  first_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  last_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  password_hash?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
-  avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  role?: Prisma.Enumuser_roleFieldUpdateOperationsInput | $Enums.user_role
-  onboarding_completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  subscription?: Prisma.Enumsubscription_tierFieldUpdateOperationsInput | $Enums.subscription_tier
-  subscription_expires_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  is_active?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  last_sign_in_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  refresh_tokens?: Prisma.refresh_tokensUpdateOneWithoutAccountsNestedInput
-}
-
-export type accountsUncheckedUpdateWithoutAccount_verificationsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  first_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  last_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  password_hash?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
-  avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  role?: Prisma.Enumuser_roleFieldUpdateOperationsInput | $Enums.user_role
-  onboarding_completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  subscription?: Prisma.Enumsubscription_tierFieldUpdateOperationsInput | $Enums.subscription_tier
-  subscription_expires_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  is_active?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  last_sign_in_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  refresh_tokens?: Prisma.refresh_tokensUncheckedUpdateOneWithoutAccountsNestedInput
+export type accountsUpdateOneRequiredWithoutOtp_tokensNestedInput = {
+  create?: Prisma.XOR<Prisma.accountsCreateWithoutOtp_tokensInput, Prisma.accountsUncheckedCreateWithoutOtp_tokensInput>
+  connectOrCreate?: Prisma.accountsCreateOrConnectWithoutOtp_tokensInput
+  upsert?: Prisma.accountsUpsertWithoutOtp_tokensInput
+  connect?: Prisma.accountsWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.accountsUpdateToOneWithWhereWithoutOtp_tokensInput, Prisma.accountsUpdateWithoutOtp_tokensInput>, Prisma.accountsUncheckedUpdateWithoutOtp_tokensInput>
 }
 
 export type accountsCreateWithoutRefresh_tokensInput = {
@@ -689,10 +635,11 @@ export type accountsCreateWithoutRefresh_tokensInput = {
   subscription?: $Enums.subscription_tier
   subscription_expires_at?: Date | string | null
   is_active?: boolean | null
+  is_verified?: boolean | null
   last_sign_in_at?: Date | string | null
   created_at?: Date | string | null
   updated_at?: Date | string | null
-  account_verifications?: Prisma.account_verificationsCreateNestedOneWithoutAccountsInput
+  otp_tokens?: Prisma.otp_tokensCreateNestedOneWithoutAccountsInput
 }
 
 export type accountsUncheckedCreateWithoutRefresh_tokensInput = {
@@ -708,10 +655,11 @@ export type accountsUncheckedCreateWithoutRefresh_tokensInput = {
   subscription?: $Enums.subscription_tier
   subscription_expires_at?: Date | string | null
   is_active?: boolean | null
+  is_verified?: boolean | null
   last_sign_in_at?: Date | string | null
   created_at?: Date | string | null
   updated_at?: Date | string | null
-  account_verifications?: Prisma.account_verificationsUncheckedCreateNestedOneWithoutAccountsInput
+  otp_tokens?: Prisma.otp_tokensUncheckedCreateNestedOneWithoutAccountsInput
 }
 
 export type accountsCreateOrConnectWithoutRefresh_tokensInput = {
@@ -743,10 +691,11 @@ export type accountsUpdateWithoutRefresh_tokensInput = {
   subscription?: Prisma.Enumsubscription_tierFieldUpdateOperationsInput | $Enums.subscription_tier
   subscription_expires_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_active?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  is_verified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   last_sign_in_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  account_verifications?: Prisma.account_verificationsUpdateOneWithoutAccountsNestedInput
+  otp_tokens?: Prisma.otp_tokensUpdateOneWithoutAccountsNestedInput
 }
 
 export type accountsUncheckedUpdateWithoutRefresh_tokensInput = {
@@ -762,12 +711,138 @@ export type accountsUncheckedUpdateWithoutRefresh_tokensInput = {
   subscription?: Prisma.Enumsubscription_tierFieldUpdateOperationsInput | $Enums.subscription_tier
   subscription_expires_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_active?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  is_verified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   last_sign_in_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  account_verifications?: Prisma.account_verificationsUncheckedUpdateOneWithoutAccountsNestedInput
+  otp_tokens?: Prisma.otp_tokensUncheckedUpdateOneWithoutAccountsNestedInput
 }
 
+export type accountsCreateWithoutOtp_tokensInput = {
+  id?: string
+  email?: string | null
+  first_name?: string | null
+  last_name?: string | null
+  password_hash: string
+  phone: string
+  avatar_url?: string | null
+  role?: $Enums.user_role
+  onboarding_completed?: boolean
+  subscription?: $Enums.subscription_tier
+  subscription_expires_at?: Date | string | null
+  is_active?: boolean | null
+  is_verified?: boolean | null
+  last_sign_in_at?: Date | string | null
+  created_at?: Date | string | null
+  updated_at?: Date | string | null
+  refresh_tokens?: Prisma.refresh_tokensCreateNestedManyWithoutAccountsInput
+}
+
+export type accountsUncheckedCreateWithoutOtp_tokensInput = {
+  id?: string
+  email?: string | null
+  first_name?: string | null
+  last_name?: string | null
+  password_hash: string
+  phone: string
+  avatar_url?: string | null
+  role?: $Enums.user_role
+  onboarding_completed?: boolean
+  subscription?: $Enums.subscription_tier
+  subscription_expires_at?: Date | string | null
+  is_active?: boolean | null
+  is_verified?: boolean | null
+  last_sign_in_at?: Date | string | null
+  created_at?: Date | string | null
+  updated_at?: Date | string | null
+  refresh_tokens?: Prisma.refresh_tokensUncheckedCreateNestedManyWithoutAccountsInput
+}
+
+export type accountsCreateOrConnectWithoutOtp_tokensInput = {
+  where: Prisma.accountsWhereUniqueInput
+  create: Prisma.XOR<Prisma.accountsCreateWithoutOtp_tokensInput, Prisma.accountsUncheckedCreateWithoutOtp_tokensInput>
+}
+
+export type accountsUpsertWithoutOtp_tokensInput = {
+  update: Prisma.XOR<Prisma.accountsUpdateWithoutOtp_tokensInput, Prisma.accountsUncheckedUpdateWithoutOtp_tokensInput>
+  create: Prisma.XOR<Prisma.accountsCreateWithoutOtp_tokensInput, Prisma.accountsUncheckedCreateWithoutOtp_tokensInput>
+  where?: Prisma.accountsWhereInput
+}
+
+export type accountsUpdateToOneWithWhereWithoutOtp_tokensInput = {
+  where?: Prisma.accountsWhereInput
+  data: Prisma.XOR<Prisma.accountsUpdateWithoutOtp_tokensInput, Prisma.accountsUncheckedUpdateWithoutOtp_tokensInput>
+}
+
+export type accountsUpdateWithoutOtp_tokensInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  first_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  last_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password_hash?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.Enumuser_roleFieldUpdateOperationsInput | $Enums.user_role
+  onboarding_completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  subscription?: Prisma.Enumsubscription_tierFieldUpdateOperationsInput | $Enums.subscription_tier
+  subscription_expires_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  is_active?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  is_verified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  last_sign_in_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  refresh_tokens?: Prisma.refresh_tokensUpdateManyWithoutAccountsNestedInput
+}
+
+export type accountsUncheckedUpdateWithoutOtp_tokensInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  first_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  last_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password_hash?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.Enumuser_roleFieldUpdateOperationsInput | $Enums.user_role
+  onboarding_completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  subscription?: Prisma.Enumsubscription_tierFieldUpdateOperationsInput | $Enums.subscription_tier
+  subscription_expires_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  is_active?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  is_verified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  last_sign_in_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  refresh_tokens?: Prisma.refresh_tokensUncheckedUpdateManyWithoutAccountsNestedInput
+}
+
+
+/**
+ * Count Type AccountsCountOutputType
+ */
+
+export type AccountsCountOutputType = {
+  refresh_tokens: number
+}
+
+export type AccountsCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  refresh_tokens?: boolean | AccountsCountOutputTypeCountRefresh_tokensArgs
+}
+
+/**
+ * AccountsCountOutputType without action
+ */
+export type AccountsCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AccountsCountOutputType
+   */
+  select?: Prisma.AccountsCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * AccountsCountOutputType without action
+ */
+export type AccountsCountOutputTypeCountRefresh_tokensArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.refresh_tokensWhereInput
+}
 
 
 export type accountsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -783,11 +858,13 @@ export type accountsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   subscription?: boolean
   subscription_expires_at?: boolean
   is_active?: boolean
+  is_verified?: boolean
   last_sign_in_at?: boolean
   created_at?: boolean
   updated_at?: boolean
-  account_verifications?: boolean | Prisma.accounts$account_verificationsArgs<ExtArgs>
+  otp_tokens?: boolean | Prisma.accounts$otp_tokensArgs<ExtArgs>
   refresh_tokens?: boolean | Prisma.accounts$refresh_tokensArgs<ExtArgs>
+  _count?: boolean | Prisma.AccountsCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["accounts"]>
 
 export type accountsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -803,6 +880,7 @@ export type accountsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   subscription?: boolean
   subscription_expires_at?: boolean
   is_active?: boolean
+  is_verified?: boolean
   last_sign_in_at?: boolean
   created_at?: boolean
   updated_at?: boolean
@@ -821,6 +899,7 @@ export type accountsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   subscription?: boolean
   subscription_expires_at?: boolean
   is_active?: boolean
+  is_verified?: boolean
   last_sign_in_at?: boolean
   created_at?: boolean
   updated_at?: boolean
@@ -839,15 +918,17 @@ export type accountsSelectScalar = {
   subscription?: boolean
   subscription_expires_at?: boolean
   is_active?: boolean
+  is_verified?: boolean
   last_sign_in_at?: boolean
   created_at?: boolean
   updated_at?: boolean
 }
 
-export type accountsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "first_name" | "last_name" | "password_hash" | "phone" | "avatar_url" | "role" | "onboarding_completed" | "subscription" | "subscription_expires_at" | "is_active" | "last_sign_in_at" | "created_at" | "updated_at", ExtArgs["result"]["accounts"]>
+export type accountsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "first_name" | "last_name" | "password_hash" | "phone" | "avatar_url" | "role" | "onboarding_completed" | "subscription" | "subscription_expires_at" | "is_active" | "is_verified" | "last_sign_in_at" | "created_at" | "updated_at", ExtArgs["result"]["accounts"]>
 export type accountsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  account_verifications?: boolean | Prisma.accounts$account_verificationsArgs<ExtArgs>
+  otp_tokens?: boolean | Prisma.accounts$otp_tokensArgs<ExtArgs>
   refresh_tokens?: boolean | Prisma.accounts$refresh_tokensArgs<ExtArgs>
+  _count?: boolean | Prisma.AccountsCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type accountsIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 export type accountsIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -855,8 +936,8 @@ export type accountsIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
 export type $accountsPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "accounts"
   objects: {
-    account_verifications: Prisma.$account_verificationsPayload<ExtArgs> | null
-    refresh_tokens: Prisma.$refresh_tokensPayload<ExtArgs> | null
+    otp_tokens: Prisma.$otp_tokensPayload<ExtArgs> | null
+    refresh_tokens: Prisma.$refresh_tokensPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -871,6 +952,7 @@ export type $accountsPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     subscription: $Enums.subscription_tier
     subscription_expires_at: Date | null
     is_active: boolean | null
+    is_verified: boolean | null
     last_sign_in_at: Date | null
     created_at: Date | null
     updated_at: Date | null
@@ -1268,8 +1350,8 @@ readonly fields: accountsFieldRefs;
  */
 export interface Prisma__accountsClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  account_verifications<T extends Prisma.accounts$account_verificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.accounts$account_verificationsArgs<ExtArgs>>): Prisma.Prisma__account_verificationsClient<runtime.Types.Result.GetResult<Prisma.$account_verificationsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  refresh_tokens<T extends Prisma.accounts$refresh_tokensArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.accounts$refresh_tokensArgs<ExtArgs>>): Prisma.Prisma__refresh_tokensClient<runtime.Types.Result.GetResult<Prisma.$refresh_tokensPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  otp_tokens<T extends Prisma.accounts$otp_tokensArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.accounts$otp_tokensArgs<ExtArgs>>): Prisma.Prisma__otp_tokensClient<runtime.Types.Result.GetResult<Prisma.$otp_tokensPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  refresh_tokens<T extends Prisma.accounts$refresh_tokensArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.accounts$refresh_tokensArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$refresh_tokensPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1311,6 +1393,7 @@ export interface accountsFieldRefs {
   readonly subscription: Prisma.FieldRef<"accounts", 'subscription_tier'>
   readonly subscription_expires_at: Prisma.FieldRef<"accounts", 'DateTime'>
   readonly is_active: Prisma.FieldRef<"accounts", 'Boolean'>
+  readonly is_verified: Prisma.FieldRef<"accounts", 'Boolean'>
   readonly last_sign_in_at: Prisma.FieldRef<"accounts", 'DateTime'>
   readonly created_at: Prisma.FieldRef<"accounts", 'DateTime'>
   readonly updated_at: Prisma.FieldRef<"accounts", 'DateTime'>
@@ -1702,22 +1785,22 @@ export type accountsDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
 }
 
 /**
- * accounts.account_verifications
+ * accounts.otp_tokens
  */
-export type accounts$account_verificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type accounts$otp_tokensArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the account_verifications
+   * Select specific fields to fetch from the otp_tokens
    */
-  select?: Prisma.account_verificationsSelect<ExtArgs> | null
+  select?: Prisma.otp_tokensSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the account_verifications
+   * Omit specific fields from the otp_tokens
    */
-  omit?: Prisma.account_verificationsOmit<ExtArgs> | null
+  omit?: Prisma.otp_tokensOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.account_verificationsInclude<ExtArgs> | null
-  where?: Prisma.account_verificationsWhereInput
+  include?: Prisma.otp_tokensInclude<ExtArgs> | null
+  where?: Prisma.otp_tokensWhereInput
 }
 
 /**
@@ -1737,6 +1820,11 @@ export type accounts$refresh_tokensArgs<ExtArgs extends runtime.Types.Extensions
    */
   include?: Prisma.refresh_tokensInclude<ExtArgs> | null
   where?: Prisma.refresh_tokensWhereInput
+  orderBy?: Prisma.refresh_tokensOrderByWithRelationInput | Prisma.refresh_tokensOrderByWithRelationInput[]
+  cursor?: Prisma.refresh_tokensWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.Refresh_tokensScalarFieldEnum | Prisma.Refresh_tokensScalarFieldEnum[]
 }
 
 /**

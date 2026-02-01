@@ -9,9 +9,9 @@ import { accounts } from '@app/generated/prisma/client';
 import { UsersRepository } from './users.repository';
 import { CreateUserDto } from './dto/create-user.dto';
 import * as bcrypt from 'bcryptjs';
-import { VerificationRepository } from './verification.repository';
 import { OtpService } from '../otp/otp.service';
 import dayjs from 'dayjs';
+import { OtpTokensRepository } from '../otp/otp-tokens.repository';
 
 @Injectable()
 export class UsersService {
@@ -19,8 +19,8 @@ export class UsersService {
 
   constructor(
     private readonly usersRepository: UsersRepository,
-    private readonly verificationRepository: VerificationRepository,
     private readonly otpService: OtpService,
+    private readonly otpTokensRepository: OtpTokensRepository,
   ) {}
 
   async findById(id: string) {
@@ -67,37 +67,42 @@ export class UsersService {
   }
 
   async verifyAccount(account_id: string, token: string) {
-    const verification =
-      await this.verificationRepository.findByUserId(account_id);
-
-    if (!verification || !verification.token) {
-      throw new BadRequestException(
-        'No verification code found. Please request a new one.',
-      );
+    const user = await this.usersRepository.findById(account_id);
+    if (!user) {
+      throw new NotFoundException('User not found');
     }
-    if (verification.is_verified) {
+
+    if (user.is_verified) {
       throw new BadRequestException('Account already verified');
     }
 
-    if (dayjs().isAfter(verification.expires_at)) {
-      throw new BadRequestException('Verification code has expired');
+    const otpRecord = await this.otpTokensRepository.findByUserId(account_id);
+
+    if (!otpRecord || !otpRecord.token) {
+      throw new BadRequestException(
+        'No OTP code found. Please request a new one.',
+      );
     }
 
-    if (token !== verification.token) {
-      throw new BadRequestException('Invalid verification code');
+    if (dayjs().isAfter(otpRecord.expires_at)) {
+      throw new BadRequestException('OTP code has expired');
     }
 
-    await this.verificationRepository.verifyAccount(account_id);
+    if (token !== otpRecord.token) {
+      throw new BadRequestException('Invalid OTP code');
+    }
+
+    await this.usersRepository.verifyAccount(account_id);
+    await this.otpTokensRepository.revokeToken(account_id, token);
 
     return { message: 'User verified successfully' };
   }
 
   async resendVerificationCode(account_id: string) {
-    const verification =
-      await this.verificationRepository.findByUserId(account_id);
+    const otpRecord = await this.otpTokensRepository.findByUserId(account_id);
 
-    if (dayjs().isBefore(verification?.expires_at)) {
-      const wait = dayjs(verification?.expires_at).diff(dayjs(), 'second');
+    if (otpRecord && dayjs().isBefore(otpRecord.expires_at)) {
+      const wait = dayjs(otpRecord.expires_at).diff(dayjs(), 'second');
 
       throw new BadRequestException(
         `Please wait ${wait} seconds before requesting a new code`,
@@ -106,10 +111,8 @@ export class UsersService {
 
     // Send new code
     await this.sendVerificationCode(account_id);
-  }
 
-  async getProfile(userId: string) {
-    return this.usersRepository.profile(userId);
+    return { message: 'Verification code resent successfully' };
   }
 
   private async sendVerificationCode(userId: string): Promise<void> {
@@ -120,7 +123,7 @@ export class UsersService {
     }
 
     const otp = await this.otpService.sendOtpToMobile(user.phone);
-    await this.verificationRepository.saveToken(userId, otp);
+    await this.otpTokensRepository.upsertToken(userId, otp);
   }
 
   private async hashPassword(value: string) {

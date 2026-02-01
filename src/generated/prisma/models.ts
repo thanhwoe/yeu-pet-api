@@ -8,7 +8,7 @@
  *
  * 🟢 You can import this file directly.
  */
-export type * from './models/account_verifications.js'
 export type * from './models/accounts.js'
 export type * from './models/refresh_tokens.js'
+export type * from './models/otp_tokens.js'
 export type * from './commonInputTypes.js'

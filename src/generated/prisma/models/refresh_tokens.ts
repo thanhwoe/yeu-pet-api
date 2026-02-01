@@ -214,17 +214,17 @@ export type refresh_tokensOrderByWithRelationInput = {
 
 export type refresh_tokensWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  account_id?: string
+  token_hash?: string
   AND?: Prisma.refresh_tokensWhereInput | Prisma.refresh_tokensWhereInput[]
   OR?: Prisma.refresh_tokensWhereInput[]
   NOT?: Prisma.refresh_tokensWhereInput | Prisma.refresh_tokensWhereInput[]
-  token_hash?: Prisma.StringFilter<"refresh_tokens"> | string
+  account_id?: Prisma.UuidFilter<"refresh_tokens"> | string
   expires_at?: Prisma.DateTimeFilter<"refresh_tokens"> | Date | string
   revoked_at?: Prisma.DateTimeNullableFilter<"refresh_tokens"> | Date | string | null
   created_at?: Prisma.DateTimeNullableFilter<"refresh_tokens"> | Date | string | null
   updated_at?: Prisma.DateTimeNullableFilter<"refresh_tokens"> | Date | string | null
   accounts?: Prisma.XOR<Prisma.AccountsScalarRelationFilter, Prisma.accountsWhereInput>
-}, "id" | "account_id">
+}, "id" | "token_hash">
 
 export type refresh_tokensOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -321,9 +321,14 @@ export type refresh_tokensUncheckedUpdateManyInput = {
   updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
-export type Refresh_tokensNullableScalarRelationFilter = {
-  is?: Prisma.refresh_tokensWhereInput | null
-  isNot?: Prisma.refresh_tokensWhereInput | null
+export type Refresh_tokensListRelationFilter = {
+  every?: Prisma.refresh_tokensWhereInput
+  some?: Prisma.refresh_tokensWhereInput
+  none?: Prisma.refresh_tokensWhereInput
+}
+
+export type refresh_tokensOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type refresh_tokensCountOrderByAggregateInput = {
@@ -356,36 +361,46 @@ export type refresh_tokensMinOrderByAggregateInput = {
   updated_at?: Prisma.SortOrder
 }
 
-export type refresh_tokensCreateNestedOneWithoutAccountsInput = {
-  create?: Prisma.XOR<Prisma.refresh_tokensCreateWithoutAccountsInput, Prisma.refresh_tokensUncheckedCreateWithoutAccountsInput>
-  connectOrCreate?: Prisma.refresh_tokensCreateOrConnectWithoutAccountsInput
-  connect?: Prisma.refresh_tokensWhereUniqueInput
+export type refresh_tokensCreateNestedManyWithoutAccountsInput = {
+  create?: Prisma.XOR<Prisma.refresh_tokensCreateWithoutAccountsInput, Prisma.refresh_tokensUncheckedCreateWithoutAccountsInput> | Prisma.refresh_tokensCreateWithoutAccountsInput[] | Prisma.refresh_tokensUncheckedCreateWithoutAccountsInput[]
+  connectOrCreate?: Prisma.refresh_tokensCreateOrConnectWithoutAccountsInput | Prisma.refresh_tokensCreateOrConnectWithoutAccountsInput[]
+  createMany?: Prisma.refresh_tokensCreateManyAccountsInputEnvelope
+  connect?: Prisma.refresh_tokensWhereUniqueInput | Prisma.refresh_tokensWhereUniqueInput[]
 }
 
-export type refresh_tokensUncheckedCreateNestedOneWithoutAccountsInput = {
-  create?: Prisma.XOR<Prisma.refresh_tokensCreateWithoutAccountsInput, Prisma.refresh_tokensUncheckedCreateWithoutAccountsInput>
-  connectOrCreate?: Prisma.refresh_tokensCreateOrConnectWithoutAccountsInput
-  connect?: Prisma.refresh_tokensWhereUniqueInput
+export type refresh_tokensUncheckedCreateNestedManyWithoutAccountsInput = {
+  create?: Prisma.XOR<Prisma.refresh_tokensCreateWithoutAccountsInput, Prisma.refresh_tokensUncheckedCreateWithoutAccountsInput> | Prisma.refresh_tokensCreateWithoutAccountsInput[] | Prisma.refresh_tokensUncheckedCreateWithoutAccountsInput[]
+  connectOrCreate?: Prisma.refresh_tokensCreateOrConnectWithoutAccountsInput | Prisma.refresh_tokensCreateOrConnectWithoutAccountsInput[]
+  createMany?: Prisma.refresh_tokensCreateManyAccountsInputEnvelope
+  connect?: Prisma.refresh_tokensWhereUniqueInput | Prisma.refresh_tokensWhereUniqueInput[]
 }
 
-export type refresh_tokensUpdateOneWithoutAccountsNestedInput = {
-  create?: Prisma.XOR<Prisma.refresh_tokensCreateWithoutAccountsInput, Prisma.refresh_tokensUncheckedCreateWithoutAccountsInput>
-  connectOrCreate?: Prisma.refresh_tokensCreateOrConnectWithoutAccountsInput
-  upsert?: Prisma.refresh_tokensUpsertWithoutAccountsInput
-  disconnect?: Prisma.refresh_tokensWhereInput | boolean
-  delete?: Prisma.refresh_tokensWhereInput | boolean
-  connect?: Prisma.refresh_tokensWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.refresh_tokensUpdateToOneWithWhereWithoutAccountsInput, Prisma.refresh_tokensUpdateWithoutAccountsInput>, Prisma.refresh_tokensUncheckedUpdateWithoutAccountsInput>
+export type refresh_tokensUpdateManyWithoutAccountsNestedInput = {
+  create?: Prisma.XOR<Prisma.refresh_tokensCreateWithoutAccountsInput, Prisma.refresh_tokensUncheckedCreateWithoutAccountsInput> | Prisma.refresh_tokensCreateWithoutAccountsInput[] | Prisma.refresh_tokensUncheckedCreateWithoutAccountsInput[]
+  connectOrCreate?: Prisma.refresh_tokensCreateOrConnectWithoutAccountsInput | Prisma.refresh_tokensCreateOrConnectWithoutAccountsInput[]
+  upsert?: Prisma.refresh_tokensUpsertWithWhereUniqueWithoutAccountsInput | Prisma.refresh_tokensUpsertWithWhereUniqueWithoutAccountsInput[]
+  createMany?: Prisma.refresh_tokensCreateManyAccountsInputEnvelope
+  set?: Prisma.refresh_tokensWhereUniqueInput | Prisma.refresh_tokensWhereUniqueInput[]
+  disconnect?: Prisma.refresh_tokensWhereUniqueInput | Prisma.refresh_tokensWhereUniqueInput[]
+  delete?: Prisma.refresh_tokensWhereUniqueInput | Prisma.refresh_tokensWhereUniqueInput[]
+  connect?: Prisma.refresh_tokensWhereUniqueInput | Prisma.refresh_tokensWhereUniqueInput[]
+  update?: Prisma.refresh_tokensUpdateWithWhereUniqueWithoutAccountsInput | Prisma.refresh_tokensUpdateWithWhereUniqueWithoutAccountsInput[]
+  updateMany?: Prisma.refresh_tokensUpdateManyWithWhereWithoutAccountsInput | Prisma.refresh_tokensUpdateManyWithWhereWithoutAccountsInput[]
+  deleteMany?: Prisma.refresh_tokensScalarWhereInput | Prisma.refresh_tokensScalarWhereInput[]
 }
 
-export type refresh_tokensUncheckedUpdateOneWithoutAccountsNestedInput = {
-  create?: Prisma.XOR<Prisma.refresh_tokensCreateWithoutAccountsInput, Prisma.refresh_tokensUncheckedCreateWithoutAccountsInput>
-  connectOrCreate?: Prisma.refresh_tokensCreateOrConnectWithoutAccountsInput
-  upsert?: Prisma.refresh_tokensUpsertWithoutAccountsInput
-  disconnect?: Prisma.refresh_tokensWhereInput | boolean
-  delete?: Prisma.refresh_tokensWhereInput | boolean
-  connect?: Prisma.refresh_tokensWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.refresh_tokensUpdateToOneWithWhereWithoutAccountsInput, Prisma.refresh_tokensUpdateWithoutAccountsInput>, Prisma.refresh_tokensUncheckedUpdateWithoutAccountsInput>
+export type refresh_tokensUncheckedUpdateManyWithoutAccountsNestedInput = {
+  create?: Prisma.XOR<Prisma.refresh_tokensCreateWithoutAccountsInput, Prisma.refresh_tokensUncheckedCreateWithoutAccountsInput> | Prisma.refresh_tokensCreateWithoutAccountsInput[] | Prisma.refresh_tokensUncheckedCreateWithoutAccountsInput[]
+  connectOrCreate?: Prisma.refresh_tokensCreateOrConnectWithoutAccountsInput | Prisma.refresh_tokensCreateOrConnectWithoutAccountsInput[]
+  upsert?: Prisma.refresh_tokensUpsertWithWhereUniqueWithoutAccountsInput | Prisma.refresh_tokensUpsertWithWhereUniqueWithoutAccountsInput[]
+  createMany?: Prisma.refresh_tokensCreateManyAccountsInputEnvelope
+  set?: Prisma.refresh_tokensWhereUniqueInput | Prisma.refresh_tokensWhereUniqueInput[]
+  disconnect?: Prisma.refresh_tokensWhereUniqueInput | Prisma.refresh_tokensWhereUniqueInput[]
+  delete?: Prisma.refresh_tokensWhereUniqueInput | Prisma.refresh_tokensWhereUniqueInput[]
+  connect?: Prisma.refresh_tokensWhereUniqueInput | Prisma.refresh_tokensWhereUniqueInput[]
+  update?: Prisma.refresh_tokensUpdateWithWhereUniqueWithoutAccountsInput | Prisma.refresh_tokensUpdateWithWhereUniqueWithoutAccountsInput[]
+  updateMany?: Prisma.refresh_tokensUpdateManyWithWhereWithoutAccountsInput | Prisma.refresh_tokensUpdateManyWithWhereWithoutAccountsInput[]
+  deleteMany?: Prisma.refresh_tokensScalarWhereInput | Prisma.refresh_tokensScalarWhereInput[]
 }
 
 export type DateTimeFieldUpdateOperationsInput = {
@@ -415,15 +430,47 @@ export type refresh_tokensCreateOrConnectWithoutAccountsInput = {
   create: Prisma.XOR<Prisma.refresh_tokensCreateWithoutAccountsInput, Prisma.refresh_tokensUncheckedCreateWithoutAccountsInput>
 }
 
-export type refresh_tokensUpsertWithoutAccountsInput = {
-  update: Prisma.XOR<Prisma.refresh_tokensUpdateWithoutAccountsInput, Prisma.refresh_tokensUncheckedUpdateWithoutAccountsInput>
-  create: Prisma.XOR<Prisma.refresh_tokensCreateWithoutAccountsInput, Prisma.refresh_tokensUncheckedCreateWithoutAccountsInput>
-  where?: Prisma.refresh_tokensWhereInput
+export type refresh_tokensCreateManyAccountsInputEnvelope = {
+  data: Prisma.refresh_tokensCreateManyAccountsInput | Prisma.refresh_tokensCreateManyAccountsInput[]
+  skipDuplicates?: boolean
 }
 
-export type refresh_tokensUpdateToOneWithWhereWithoutAccountsInput = {
-  where?: Prisma.refresh_tokensWhereInput
+export type refresh_tokensUpsertWithWhereUniqueWithoutAccountsInput = {
+  where: Prisma.refresh_tokensWhereUniqueInput
+  update: Prisma.XOR<Prisma.refresh_tokensUpdateWithoutAccountsInput, Prisma.refresh_tokensUncheckedUpdateWithoutAccountsInput>
+  create: Prisma.XOR<Prisma.refresh_tokensCreateWithoutAccountsInput, Prisma.refresh_tokensUncheckedCreateWithoutAccountsInput>
+}
+
+export type refresh_tokensUpdateWithWhereUniqueWithoutAccountsInput = {
+  where: Prisma.refresh_tokensWhereUniqueInput
   data: Prisma.XOR<Prisma.refresh_tokensUpdateWithoutAccountsInput, Prisma.refresh_tokensUncheckedUpdateWithoutAccountsInput>
+}
+
+export type refresh_tokensUpdateManyWithWhereWithoutAccountsInput = {
+  where: Prisma.refresh_tokensScalarWhereInput
+  data: Prisma.XOR<Prisma.refresh_tokensUpdateManyMutationInput, Prisma.refresh_tokensUncheckedUpdateManyWithoutAccountsInput>
+}
+
+export type refresh_tokensScalarWhereInput = {
+  AND?: Prisma.refresh_tokensScalarWhereInput | Prisma.refresh_tokensScalarWhereInput[]
+  OR?: Prisma.refresh_tokensScalarWhereInput[]
+  NOT?: Prisma.refresh_tokensScalarWhereInput | Prisma.refresh_tokensScalarWhereInput[]
+  id?: Prisma.UuidFilter<"refresh_tokens"> | string
+  account_id?: Prisma.UuidFilter<"refresh_tokens"> | string
+  token_hash?: Prisma.StringFilter<"refresh_tokens"> | string
+  expires_at?: Prisma.DateTimeFilter<"refresh_tokens"> | Date | string
+  revoked_at?: Prisma.DateTimeNullableFilter<"refresh_tokens"> | Date | string | null
+  created_at?: Prisma.DateTimeNullableFilter<"refresh_tokens"> | Date | string | null
+  updated_at?: Prisma.DateTimeNullableFilter<"refresh_tokens"> | Date | string | null
+}
+
+export type refresh_tokensCreateManyAccountsInput = {
+  id?: string
+  token_hash: string
+  expires_at: Date | string
+  revoked_at?: Date | string | null
+  created_at?: Date | string | null
+  updated_at?: Date | string | null
 }
 
 export type refresh_tokensUpdateWithoutAccountsInput = {
@@ -436,6 +483,15 @@ export type refresh_tokensUpdateWithoutAccountsInput = {
 }
 
 export type refresh_tokensUncheckedUpdateWithoutAccountsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  token_hash?: Prisma.StringFieldUpdateOperationsInput | string
+  expires_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  revoked_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+}
+
+export type refresh_tokensUncheckedUpdateManyWithoutAccountsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   token_hash?: Prisma.StringFieldUpdateOperationsInput | string
   expires_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string

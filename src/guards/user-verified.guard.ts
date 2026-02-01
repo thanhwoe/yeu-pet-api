@@ -21,7 +21,7 @@ export class UserVerifiedGuard implements CanActivate {
       throw new ForbiddenException('User not authenticated');
     }
 
-    const user = await this.usersService.getProfile(userId);
+    const user = await this.usersService.findById(userId);
 
     if (!user?.is_verified) {
       throw new ForbiddenException(

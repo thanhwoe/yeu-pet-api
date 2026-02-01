@@ -19,6 +19,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: IJwtPayload) {
+    // TODO: redis cache user
     const user = await this.usersService.findById(payload.sub);
 
     if (!user) {

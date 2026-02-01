@@ -4,7 +4,6 @@ export interface IRefreshTokensRepository {
   revokeByUserId(userId: string): Promise<void>;
   delete(userId: string): Promise<void>;
   create(data: any): Promise<refresh_tokens>;
-  findByUserId(userId: string): Promise<refresh_tokens | null>;
   revokeByTokenHash(token: string): Promise<void>;
   deleteExpired(): Promise<number>;
   findByTokenHash(

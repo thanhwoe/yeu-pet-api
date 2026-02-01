@@ -21,12 +21,6 @@ export class RefreshTokensRepository implements IRefreshTokensRepository {
     });
   }
 
-  async findByUserId(account_id: string) {
-    return this.prisma.refresh_tokens.findUnique({
-      where: { account_id },
-    });
-  }
-
   async revokeByUserId(account_id: string) {
     await this.prisma.refresh_tokens.updateMany({
       where: {

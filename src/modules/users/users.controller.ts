@@ -30,9 +30,9 @@ export class UsersController {
     return this.usersService.resendVerificationCode(user.id);
   }
 
-  @Get('profile')
+  @Get('me')
   @HttpCode(HttpStatus.OK)
   async getProfile(@CurrentUser() user: accounts) {
-    return this.usersService.getProfile(user.id);
+    return this.usersService.findById(user.id);
   }
 }

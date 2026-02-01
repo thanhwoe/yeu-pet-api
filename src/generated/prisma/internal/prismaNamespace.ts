@@ -384,9 +384,9 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 
 export const ModelName = {
-  account_verifications: 'account_verifications',
   accounts: 'accounts',
-  refresh_tokens: 'refresh_tokens'
+  refresh_tokens: 'refresh_tokens',
+  otp_tokens: 'otp_tokens'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -402,84 +402,10 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "account_verifications" | "accounts" | "refresh_tokens"
+    modelProps: "accounts" | "refresh_tokens" | "otp_tokens"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
-    account_verifications: {
-      payload: Prisma.$account_verificationsPayload<ExtArgs>
-      fields: Prisma.account_verificationsFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.account_verificationsFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$account_verificationsPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.account_verificationsFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$account_verificationsPayload>
-        }
-        findFirst: {
-          args: Prisma.account_verificationsFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$account_verificationsPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.account_verificationsFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$account_verificationsPayload>
-        }
-        findMany: {
-          args: Prisma.account_verificationsFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$account_verificationsPayload>[]
-        }
-        create: {
-          args: Prisma.account_verificationsCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$account_verificationsPayload>
-        }
-        createMany: {
-          args: Prisma.account_verificationsCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.account_verificationsCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$account_verificationsPayload>[]
-        }
-        delete: {
-          args: Prisma.account_verificationsDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$account_verificationsPayload>
-        }
-        update: {
-          args: Prisma.account_verificationsUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$account_verificationsPayload>
-        }
-        deleteMany: {
-          args: Prisma.account_verificationsDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.account_verificationsUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.account_verificationsUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$account_verificationsPayload>[]
-        }
-        upsert: {
-          args: Prisma.account_verificationsUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$account_verificationsPayload>
-        }
-        aggregate: {
-          args: Prisma.Account_verificationsAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateAccount_verifications>
-        }
-        groupBy: {
-          args: Prisma.account_verificationsGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.Account_verificationsGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.account_verificationsCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.Account_verificationsCountAggregateOutputType> | number
-        }
-      }
-    }
     accounts: {
       payload: Prisma.$accountsPayload<ExtArgs>
       fields: Prisma.accountsFieldRefs
@@ -628,6 +554,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    otp_tokens: {
+      payload: Prisma.$otp_tokensPayload<ExtArgs>
+      fields: Prisma.otp_tokensFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.otp_tokensFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$otp_tokensPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.otp_tokensFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$otp_tokensPayload>
+        }
+        findFirst: {
+          args: Prisma.otp_tokensFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$otp_tokensPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.otp_tokensFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$otp_tokensPayload>
+        }
+        findMany: {
+          args: Prisma.otp_tokensFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$otp_tokensPayload>[]
+        }
+        create: {
+          args: Prisma.otp_tokensCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$otp_tokensPayload>
+        }
+        createMany: {
+          args: Prisma.otp_tokensCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.otp_tokensCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$otp_tokensPayload>[]
+        }
+        delete: {
+          args: Prisma.otp_tokensDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$otp_tokensPayload>
+        }
+        update: {
+          args: Prisma.otp_tokensUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$otp_tokensPayload>
+        }
+        deleteMany: {
+          args: Prisma.otp_tokensDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.otp_tokensUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.otp_tokensUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$otp_tokensPayload>[]
+        }
+        upsert: {
+          args: Prisma.otp_tokensUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$otp_tokensPayload>
+        }
+        aggregate: {
+          args: Prisma.Otp_tokensAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateOtp_tokens>
+        }
+        groupBy: {
+          args: Prisma.otp_tokensGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Otp_tokensGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.otp_tokensCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Otp_tokensCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -667,18 +667,6 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
-export const Account_verificationsScalarFieldEnum = {
-  account_id: 'account_id',
-  is_verified: 'is_verified',
-  token: 'token',
-  expires_at: 'expires_at',
-  created_at: 'created_at',
-  updated_at: 'updated_at'
-} as const
-
-export type Account_verificationsScalarFieldEnum = (typeof Account_verificationsScalarFieldEnum)[keyof typeof Account_verificationsScalarFieldEnum]
-
-
 export const AccountsScalarFieldEnum = {
   id: 'id',
   email: 'email',
@@ -692,6 +680,7 @@ export const AccountsScalarFieldEnum = {
   subscription: 'subscription',
   subscription_expires_at: 'subscription_expires_at',
   is_active: 'is_active',
+  is_verified: 'is_verified',
   last_sign_in_at: 'last_sign_in_at',
   created_at: 'created_at',
   updated_at: 'updated_at'
@@ -711,6 +700,17 @@ export const Refresh_tokensScalarFieldEnum = {
 } as const
 
 export type Refresh_tokensScalarFieldEnum = (typeof Refresh_tokensScalarFieldEnum)[keyof typeof Refresh_tokensScalarFieldEnum]
+
+
+export const Otp_tokensScalarFieldEnum = {
+  account_id: 'account_id',
+  token: 'token',
+  expires_at: 'expires_at',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type Otp_tokensScalarFieldEnum = (typeof Otp_tokensScalarFieldEnum)[keyof typeof Otp_tokensScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -758,27 +758,6 @@ export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaMod
 
 
 /**
- * Reference to a field of type 'Boolean'
- */
-export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
-    
-
-
-/**
- * Reference to a field of type 'DateTime'
- */
-export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
-    
-
-
-/**
- * Reference to a field of type 'DateTime[]'
- */
-export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
-    
-
-
-/**
  * Reference to a field of type 'user_role'
  */
 export type Enumuser_roleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'user_role'>
@@ -793,6 +772,13 @@ export type ListEnumuser_roleFieldRefInput<$PrismaModel> = FieldRefInputType<$Pr
 
 
 /**
+ * Reference to a field of type 'Boolean'
+ */
+export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+/**
  * Reference to a field of type 'subscription_tier'
  */
 export type Enumsubscription_tierFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'subscription_tier'>
@@ -803,6 +789,20 @@ export type Enumsubscription_tierFieldRefInput<$PrismaModel> = FieldRefInputType
  * Reference to a field of type 'subscription_tier[]'
  */
 export type ListEnumsubscription_tierFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'subscription_tier[]'>
+    
+
+
+/**
+ * Reference to a field of type 'DateTime'
+ */
+export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
+    
+
+
+/**
+ * Reference to a field of type 'DateTime[]'
+ */
+export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
     
 
 
@@ -914,9 +914,9 @@ export type PrismaClientOptions = ({
   comments?: runtime.SqlCommenterPlugin[]
 }
 export type GlobalOmitConfig = {
-  account_verifications?: Prisma.account_verificationsOmit
   accounts?: Prisma.accountsOmit
   refresh_tokens?: Prisma.refresh_tokensOmit
+  otp_tokens?: Prisma.otp_tokensOmit
 }
 
 /* Types for Logging */

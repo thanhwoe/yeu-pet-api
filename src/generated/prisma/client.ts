@@ -27,8 +27,8 @@ export * from "./enums.js"
  * @example
  * ```
  * const prisma = new PrismaClient()
- * // Fetch zero or more Account_verifications
- * const account_verifications = await prisma.account_verifications.findMany()
+ * // Fetch zero or more Accounts
+ * const accounts = await prisma.accounts.findMany()
  * ```
  * 
  * Read more in our [docs](https://pris.ly/d/client).
@@ -37,11 +37,6 @@ export const PrismaClient = $Class.getPrismaClientClass()
 export type PrismaClient<LogOpts extends Prisma.LogLevel = never, OmitOpts extends Prisma.PrismaClientOptions["omit"] = Prisma.PrismaClientOptions["omit"], ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = $Class.PrismaClient<LogOpts, OmitOpts, ExtArgs>
 export { Prisma }
 
-/**
- * Model account_verifications
- * 
- */
-export type account_verifications = Prisma.account_verificationsModel
 /**
  * Model accounts
  * 
@@ -52,3 +47,8 @@ export type accounts = Prisma.accountsModel
  * 
  */
 export type refresh_tokens = Prisma.refresh_tokensModel
+/**
+ * Model otp_tokens
+ * 
+ */
+export type otp_tokens = Prisma.otp_tokensModel

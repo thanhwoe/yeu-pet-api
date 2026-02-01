@@ -111,25 +111,10 @@ export class UsersRepository implements IUsersRepository {
     });
   }
 
-  async profile(id: string) {
-    const user = await this.prisma.accounts.findUnique({
+  async verifyAccount(id: string): Promise<accounts> {
+    return this.prisma.accounts.update({
       where: { id },
-      include: {
-        account_verifications: {
-          select: {
-            is_verified: true,
-          },
-        },
-      },
+      data: { is_verified: true },
     });
-
-    if (!user) return null;
-
-    const { account_verifications, ...rest } = user;
-
-    return {
-      ...rest,
-      is_verified: account_verifications?.is_verified ?? false,
-    };
   }
 }

@@ -20,7 +20,7 @@ const config: runtime.GetPrismaClientConfig = {
   "clientVersion": "7.3.0",
   "engineVersion": "9d6ad21cbbceab97458517b147a6a09ff43aa735",
   "activeProvider": "postgresql",
-  "inlineSchema": "generator client {\n  provider     = \"prisma-client\"\n  output       = \"../src/generated/prisma\"\n  moduleFormat = \"cjs\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel account_verifications {\n  account_id  String    @id @db.Uuid\n  is_verified Boolean?  @default(false)\n  token       String?\n  expires_at  DateTime? @db.Timestamptz(6)\n  created_at  DateTime? @default(now()) @db.Timestamptz(6)\n  updated_at  DateTime? @default(now()) @db.Timestamptz(6)\n  accounts    accounts  @relation(fields: [account_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: \"fk_account_verifications_account_id\")\n\n  @@index([account_id], map: \"idx_account_verifications_account_id\")\n}\n\nmodel accounts {\n  id                      String                 @id @default(dbgenerated(\"gen_random_uuid()\")) @db.Uuid\n  email                   String?                @unique @db.VarChar(255)\n  first_name              String?                @db.VarChar(255)\n  last_name               String?                @db.VarChar(255)\n  password_hash           String                 @db.VarChar(255)\n  phone                   String                 @unique @db.VarChar(20)\n  avatar_url              String?\n  role                    user_role              @default(user)\n  onboarding_completed    Boolean                @default(false)\n  subscription            subscription_tier      @default(free)\n  subscription_expires_at DateTime?              @db.Timestamptz(6)\n  is_active               Boolean?               @default(true)\n  last_sign_in_at         DateTime?              @db.Timestamptz(6)\n  created_at              DateTime?              @default(now()) @db.Timestamptz(6)\n  updated_at              DateTime?              @default(now()) @db.Timestamptz(6)\n  account_verifications   account_verifications?\n  refresh_tokens          refresh_tokens?\n\n  @@index([email], map: \"idx_accounts_email\")\n  @@index([phone], map: \"idx_accounts_phone\")\n}\n\nmodel refresh_tokens {\n  id         String    @id @default(dbgenerated(\"gen_random_uuid()\")) @db.Uuid\n  account_id String    @unique @db.Uuid\n  token_hash String\n  expires_at DateTime  @db.Timestamptz(6)\n  revoked_at DateTime? @db.Timestamptz(6)\n  created_at DateTime? @default(now()) @db.Timestamptz(6)\n  updated_at DateTime? @default(now()) @db.Timestamptz(6)\n  accounts   accounts  @relation(fields: [account_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: \"fk_refresh_tokens_account_id\")\n\n  @@index([token_hash], map: \"idx_refresh_tokens_token_hash\")\n}\n\nenum subscription_tier {\n  free\n  premium\n}\n\nenum user_role {\n  user\n  admin\n}\n",
+  "inlineSchema": "generator client {\n  provider     = \"prisma-client\"\n  output       = \"../src/generated/prisma\"\n  moduleFormat = \"cjs\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel accounts {\n  id                      String            @id @default(dbgenerated(\"gen_random_uuid()\")) @db.Uuid\n  email                   String?           @unique @db.VarChar(255)\n  first_name              String?           @db.VarChar(255)\n  last_name               String?           @db.VarChar(255)\n  password_hash           String            @db.VarChar(255)\n  phone                   String            @unique @db.VarChar(20)\n  avatar_url              String?\n  role                    user_role         @default(user)\n  onboarding_completed    Boolean           @default(false)\n  subscription            subscription_tier @default(free)\n  subscription_expires_at DateTime?         @db.Timestamptz(6)\n  is_active               Boolean?          @default(true)\n  is_verified             Boolean?          @default(false)\n  last_sign_in_at         DateTime?         @db.Timestamptz(6)\n  created_at              DateTime?         @default(now()) @db.Timestamptz(6)\n  updated_at              DateTime?         @default(now()) @db.Timestamptz(6)\n  otp_tokens              otp_tokens?\n  refresh_tokens          refresh_tokens[]\n\n  @@index([email], map: \"idx_accounts_email\")\n  @@index([phone], map: \"idx_accounts_phone\")\n}\n\nmodel refresh_tokens {\n  id         String    @id @default(dbgenerated(\"gen_random_uuid()\")) @db.Uuid\n  account_id String    @db.Uuid\n  token_hash String    @unique\n  expires_at DateTime  @db.Timestamptz(6)\n  revoked_at DateTime? @db.Timestamptz(6)\n  created_at DateTime? @default(now()) @db.Timestamptz(6)\n  updated_at DateTime? @default(now()) @db.Timestamptz(6)\n  accounts   accounts  @relation(fields: [account_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: \"fk_refresh_tokens_account_id\")\n\n  @@index([token_hash], map: \"idx_refresh_tokens_token_hash\")\n}\n\nmodel otp_tokens {\n  account_id String    @id @db.Uuid\n  token      String?\n  expires_at DateTime? @db.Timestamptz(6)\n  created_at DateTime? @default(now()) @db.Timestamptz(6)\n  updated_at DateTime? @default(now()) @db.Timestamptz(6)\n  accounts   accounts  @relation(fields: [account_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: \"fk_otp_tokens_account_id\")\n\n  @@index([account_id], map: \"idx_otp_tokens_account_id\")\n}\n\nenum subscription_tier {\n  free\n  premium\n}\n\nenum user_role {\n  user\n  admin\n}\n",
   "runtimeDataModel": {
     "models": {},
     "enums": {},
@@ -28,7 +28,7 @@ const config: runtime.GetPrismaClientConfig = {
   }
 }
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"account_verifications\":{\"fields\":[{\"name\":\"account_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"is_verified\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"token\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"expires_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"created_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updated_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"accounts\",\"kind\":\"object\",\"type\":\"accounts\",\"relationName\":\"account_verificationsToaccounts\"}],\"dbName\":null},\"accounts\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"first_name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"last_name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"password_hash\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"phone\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"avatar_url\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"role\",\"kind\":\"enum\",\"type\":\"user_role\"},{\"name\":\"onboarding_completed\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"subscription\",\"kind\":\"enum\",\"type\":\"subscription_tier\"},{\"name\":\"subscription_expires_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"is_active\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"last_sign_in_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"created_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updated_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"account_verifications\",\"kind\":\"object\",\"type\":\"account_verifications\",\"relationName\":\"account_verificationsToaccounts\"},{\"name\":\"refresh_tokens\",\"kind\":\"object\",\"type\":\"refresh_tokens\",\"relationName\":\"accountsTorefresh_tokens\"}],\"dbName\":null},\"refresh_tokens\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"account_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"token_hash\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"expires_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"revoked_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"created_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updated_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"accounts\",\"kind\":\"object\",\"type\":\"accounts\",\"relationName\":\"accountsTorefresh_tokens\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"accounts\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"first_name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"last_name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"password_hash\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"phone\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"avatar_url\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"role\",\"kind\":\"enum\",\"type\":\"user_role\"},{\"name\":\"onboarding_completed\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"subscription\",\"kind\":\"enum\",\"type\":\"subscription_tier\"},{\"name\":\"subscription_expires_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"is_active\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"is_verified\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"last_sign_in_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"created_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updated_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"otp_tokens\",\"kind\":\"object\",\"type\":\"otp_tokens\",\"relationName\":\"accountsTootp_tokens\"},{\"name\":\"refresh_tokens\",\"kind\":\"object\",\"type\":\"refresh_tokens\",\"relationName\":\"accountsTorefresh_tokens\"}],\"dbName\":null},\"refresh_tokens\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"account_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"token_hash\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"expires_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"revoked_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"created_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updated_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"accounts\",\"kind\":\"object\",\"type\":\"accounts\",\"relationName\":\"accountsTorefresh_tokens\"}],\"dbName\":null},\"otp_tokens\":{\"fields\":[{\"name\":\"account_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"token\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"expires_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"created_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updated_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"accounts\",\"kind\":\"object\",\"type\":\"accounts\",\"relationName\":\"accountsTootp_tokens\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
 
 async function decodeBase64AsWasm(wasmBase64: string): Promise<WebAssembly.Module> {
   const { Buffer } = await import('node:buffer')
@@ -60,8 +60,8 @@ export interface PrismaClientConstructor {
    * @example
    * ```
    * const prisma = new PrismaClient()
-   * // Fetch zero or more Account_verifications
-   * const account_verifications = await prisma.account_verifications.findMany()
+   * // Fetch zero or more Accounts
+   * const accounts = await prisma.accounts.findMany()
    * ```
    * 
    * Read more in our [docs](https://pris.ly/d/client).
@@ -82,8 +82,8 @@ export interface PrismaClientConstructor {
  * @example
  * ```
  * const prisma = new PrismaClient()
- * // Fetch zero or more Account_verifications
- * const account_verifications = await prisma.account_verifications.findMany()
+ * // Fetch zero or more Accounts
+ * const accounts = await prisma.accounts.findMany()
  * ```
  * 
  * Read more in our [docs](https://pris.ly/d/client).
@@ -177,16 +177,6 @@ export interface PrismaClient<
   }>>
 
       /**
-   * `prisma.account_verifications`: Exposes CRUD operations for the **account_verifications** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Account_verifications
-    * const account_verifications = await prisma.account_verifications.findMany()
-    * ```
-    */
-  get account_verifications(): Prisma.account_verificationsDelegate<ExtArgs, { omit: OmitOpts }>;
-
-  /**
    * `prisma.accounts`: Exposes CRUD operations for the **accounts** model.
     * Example usage:
     * ```ts
@@ -205,6 +195,16 @@ export interface PrismaClient<
     * ```
     */
   get refresh_tokens(): Prisma.refresh_tokensDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.otp_tokens`: Exposes CRUD operations for the **otp_tokens** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Otp_tokens
+    * const otp_tokens = await prisma.otp_tokens.findMany()
+    * ```
+    */
+  get otp_tokens(): Prisma.otp_tokensDelegate<ExtArgs, { omit: OmitOpts }>;
 }
 
 export function getPrismaClientClass(): PrismaClientConstructor {
