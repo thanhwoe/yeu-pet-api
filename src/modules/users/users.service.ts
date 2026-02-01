@@ -14,6 +14,10 @@ import { OtpService } from '../otp/otp.service';
 import dayjs from 'dayjs';
 import { OtpTokensRepository } from '../otp/otp-tokens.repository';
 import { UpdatePasswordDto } from './dto/update-password.dto';
+import {
+  RequestResetPasswordDto,
+  ResetPasswordDto,
+} from './dto/reset-password.dto';
 
 @Injectable()
 export class UsersService {
@@ -68,6 +72,15 @@ export class UsersService {
     return user;
   }
 
+  async updateAccount(id: string, data: Partial<accounts>) {
+    const user = await this.usersRepository.findById(id);
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    return this.usersRepository.update(id, data);
+  }
+
   async verifyAccount(account_id: string, token: string) {
     const user = await this.usersRepository.findById(account_id);
     if (!user) {
@@ -101,17 +114,6 @@ export class UsersService {
   }
 
   async resendVerificationCode(account_id: string) {
-    const otpRecord = await this.otpTokensRepository.findByUserId(account_id);
-
-    if (otpRecord && dayjs().isBefore(otpRecord.expires_at)) {
-      const wait = dayjs(otpRecord.expires_at).diff(dayjs(), 'second');
-
-      throw new BadRequestException(
-        `Please wait ${wait} seconds before requesting a new code`,
-      );
-    }
-
-    // Send new code
     await this.sendVerificationCode(account_id);
 
     return { message: 'Verification code resent successfully' };
@@ -151,11 +153,54 @@ export class UsersService {
     });
   }
 
+  async requestPasswordReset(dto: RequestResetPasswordDto) {
+    const user = await this.usersRepository.findByPhone(dto.phone);
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    await this.sendVerificationCode(user.id);
+
+    return { message: 'Password reset code sent successfully' };
+  }
+
+  async resetPassword(dto: ResetPasswordDto) {
+    const user = await this.usersRepository.findByPhone(dto.phone);
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    const otpRecord = await this.otpTokensRepository.findByUserId(user.id);
+    if (!otpRecord || otpRecord.token !== dto.code) {
+      throw new BadRequestException('Invalid or expired OTP code');
+    }
+
+    const hashedPassword = await this.hashPassword(dto.newPassword);
+
+    await this.usersRepository.update(user.id, {
+      password_hash: hashedPassword,
+    });
+
+    await this.otpTokensRepository.revokeToken(user.id, dto.code);
+
+    return { message: 'Password reset successfully' };
+  }
+
   private async sendVerificationCode(userId: string): Promise<void> {
     const user = await this.usersRepository.findById(userId);
 
     if (!user) {
       throw new NotFoundException('User not found');
+    }
+
+    const otpRecord = await this.otpTokensRepository.findByUserId(user.id);
+
+    if (otpRecord && dayjs().isBefore(otpRecord.expires_at)) {
+      const wait = dayjs(otpRecord.expires_at).diff(dayjs(), 'second');
+
+      throw new BadRequestException(
+        `Please wait ${wait} seconds before requesting a new code`,
+      );
     }
 
     const otp = await this.otpService.sendOtpToMobile(user.phone);

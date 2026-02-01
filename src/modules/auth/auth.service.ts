@@ -46,6 +46,10 @@ export class AuthService {
   async login(user: accounts) {
     const tokens = await this.generateTokens(user);
 
+    await this.usersService.updateAccount(user.id, {
+      last_sign_in_at: new Date(),
+    });
+
     return {
       ...tokens,
       user: {

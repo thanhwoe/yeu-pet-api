@@ -11,6 +11,11 @@ import { VerifyUserDto } from './dto/verify-user.dto';
 import { CurrentUser } from '@app/decorators/current-user.decorator';
 import type { accounts } from '@app/generated/prisma/client';
 import { UpdatePasswordDto } from './dto/update-password.dto';
+import {
+  RequestResetPasswordDto,
+  ResetPasswordDto,
+} from './dto/reset-password.dto';
+import { Public } from '@app/decorators/public.decorator';
 
 @Controller('users')
 export class UsersController {
@@ -31,13 +36,29 @@ export class UsersController {
     return this.usersService.resendVerificationCode(user.id);
   }
 
-  @Post('update-password')
+  @Post('password/update')
   @HttpCode(HttpStatus.OK)
   async updatePassword(
     @CurrentUser() user: accounts,
     @Body() updatePasswordDto: UpdatePasswordDto,
   ) {
     return this.usersService.updatePassword(user.id, updatePasswordDto);
+  }
+
+  @Post('password/request')
+  @Public()
+  @HttpCode(HttpStatus.OK)
+  async requestPasswordReset(
+    @Body() requestResetPasswordDto: RequestResetPasswordDto,
+  ) {
+    return this.usersService.requestPasswordReset(requestResetPasswordDto);
+  }
+
+  @Post('password/reset')
+  @Public()
+  @HttpCode(HttpStatus.OK)
+  async resetPassword(@Body() resetPasswordDto: ResetPasswordDto) {
+    return this.usersService.resetPassword(resetPasswordDto);
   }
 
   @Get('me')
