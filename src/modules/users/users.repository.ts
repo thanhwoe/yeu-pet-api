@@ -23,6 +23,15 @@ export class UsersRepository implements IUsersRepository {
     });
   }
 
+  async findAccount(id: string) {
+    return this.prisma.accounts.findUnique({
+      where: { id },
+      omit: {
+        password_hash: false,
+      },
+    });
+  }
+
   async create(
     data: Pick<
       accounts,
@@ -34,9 +43,7 @@ export class UsersRepository implements IUsersRepository {
     });
   }
 
-  async update(payload: accounts): Promise<accounts> {
-    const { id, ...data } = payload;
-
+  async update(id: string, data: Partial<accounts>): Promise<accounts> {
     return this.prisma.accounts.update({
       where: { id },
       data,

@@ -10,6 +10,7 @@ import { UsersService } from './users.service';
 import { VerifyUserDto } from './dto/verify-user.dto';
 import { CurrentUser } from '@app/decorators/current-user.decorator';
 import type { accounts } from '@app/generated/prisma/client';
+import { UpdatePasswordDto } from './dto/update-password.dto';
 
 @Controller('users')
 export class UsersController {
@@ -28,6 +29,15 @@ export class UsersController {
   @HttpCode(HttpStatus.OK)
   async resendOtp(@CurrentUser() user: accounts) {
     return this.usersService.resendVerificationCode(user.id);
+  }
+
+  @Post('update-password')
+  @HttpCode(HttpStatus.OK)
+  async updatePassword(
+    @CurrentUser() user: accounts,
+    @Body() updatePasswordDto: UpdatePasswordDto,
+  ) {
+    return this.usersService.updatePassword(user.id, updatePasswordDto);
   }
 
   @Get('me')

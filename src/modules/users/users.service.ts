@@ -4,6 +4,7 @@ import {
   Logger,
   NotFoundException,
   BadRequestException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { accounts } from '@app/generated/prisma/client';
 import { UsersRepository } from './users.repository';
@@ -12,6 +13,7 @@ import * as bcrypt from 'bcryptjs';
 import { OtpService } from '../otp/otp.service';
 import dayjs from 'dayjs';
 import { OtpTokensRepository } from '../otp/otp-tokens.repository';
+import { UpdatePasswordDto } from './dto/update-password.dto';
 
 @Injectable()
 export class UsersService {
@@ -113,6 +115,40 @@ export class UsersService {
     await this.sendVerificationCode(account_id);
 
     return { message: 'Verification code resent successfully' };
+  }
+
+  async updatePassword(userId: string, updatePasswordDto: UpdatePasswordDto) {
+    const user = await this.usersRepository.findAccount(userId);
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    const isPasswordValid = await bcrypt.compare(
+      updatePasswordDto.currentPassword,
+      user.password_hash,
+    );
+
+    if (!isPasswordValid) {
+      throw new UnauthorizedException('Current password is incorrect');
+    }
+
+    const isSamePassword = await bcrypt.compare(
+      updatePasswordDto.newPassword,
+      user.password_hash,
+    );
+
+    if (isSamePassword) {
+      throw new BadRequestException(
+        'New password must be different from current password',
+      );
+    }
+    const hashedPassword = await this.hashPassword(
+      updatePasswordDto.newPassword,
+    );
+
+    return this.usersRepository.update(userId, {
+      password_hash: hashedPassword,
+    });
   }
 
   private async sendVerificationCode(userId: string): Promise<void> {
