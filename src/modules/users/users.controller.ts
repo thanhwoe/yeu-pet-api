@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   HttpStatus,
@@ -16,6 +17,7 @@ import {
   ResetPasswordDto,
 } from './dto/reset-password.dto';
 import { Public } from '@app/decorators/public.decorator';
+import { DeleteUserDto } from './dto/delete-user.dto';
 
 @Controller('users')
 export class UsersController {
@@ -59,6 +61,15 @@ export class UsersController {
   @HttpCode(HttpStatus.OK)
   async resetPassword(@Body() resetPasswordDto: ResetPasswordDto) {
     return this.usersService.resetPassword(resetPasswordDto);
+  }
+
+  @Delete('me')
+  @HttpCode(HttpStatus.OK)
+  async deactivateAccount(
+    @CurrentUser() user: accounts,
+    @Body() deleteUserDto: DeleteUserDto,
+  ) {
+    return this.usersService.deactivateAccount(user.id, deleteUserDto.password);
   }
 
   @Get('me')

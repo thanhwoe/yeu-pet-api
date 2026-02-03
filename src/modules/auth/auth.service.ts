@@ -20,14 +20,19 @@ export class AuthService {
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
-    private refreshTokensRepository: RefreshTokensRepository,
+    private readonly refreshTokensRepository: RefreshTokensRepository,
   ) {}
 
+  // Validate user credentials for local strategy
   async validateUser(identifier: string, password: string) {
     const user = await this.usersService.findByEmailOrPhone(identifier);
 
     if (!user) {
       return null;
+    }
+
+    if (!user.is_active) {
+      throw new UnauthorizedException('Account has been deactivated');
     }
 
     // Validate password
@@ -129,10 +134,10 @@ export class AuthService {
     return newTokens;
   }
 
-  private validatePassword(
+  private async validatePassword(
     plainPassword: string,
     hashedPassword: string,
-  ): Promise<boolean> {
+  ) {
     return bcrypt.compare(plainPassword, hashedPassword);
   }
 

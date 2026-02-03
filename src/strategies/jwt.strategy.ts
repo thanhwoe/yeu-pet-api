@@ -22,8 +22,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     // TODO: redis cache user
     const user = await this.usersService.findById(payload.sub);
 
-    if (!user) {
-      throw new UnauthorizedException('Token has been revoked');
+    if (!user || !user.is_active) {
+      throw new UnauthorizedException('User not found or inactive');
     }
 
     return user;

@@ -125,7 +125,7 @@ export class UsersService {
       throw new NotFoundException('User not found');
     }
 
-    const isPasswordValid = await bcrypt.compare(
+    const isPasswordValid = await this.validatePassword(
       updatePasswordDto.currentPassword,
       user.password_hash,
     );
@@ -134,7 +134,7 @@ export class UsersService {
       throw new UnauthorizedException('Current password is incorrect');
     }
 
-    const isSamePassword = await bcrypt.compare(
+    const isSamePassword = await this.validatePassword(
       updatePasswordDto.newPassword,
       user.password_hash,
     );
@@ -186,6 +186,29 @@ export class UsersService {
     return { message: 'Password reset successfully' };
   }
 
+  async deactivateAccount(userId: string, password: string) {
+    const user = await this.usersRepository.findAccount(userId);
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    if (!user.is_active) {
+      throw new BadRequestException('User is already deactivated');
+    }
+
+    const isPasswordValid = await this.validatePassword(
+      password,
+      user.password_hash,
+    );
+
+    if (!isPasswordValid) {
+      throw new UnauthorizedException('Invalid password');
+    }
+
+    return this.usersRepository.delete(userId);
+  }
+
   private async sendVerificationCode(userId: string): Promise<void> {
     const user = await this.usersRepository.findById(userId);
 
@@ -210,5 +233,12 @@ export class UsersService {
   private async hashPassword(value: string) {
     const salt = await bcrypt.genSalt(10);
     return bcrypt.hash(value, salt);
+  }
+
+  private async validatePassword(
+    plainPassword: string,
+    hashedPassword: string,
+  ): Promise<boolean> {
+    return bcrypt.compare(plainPassword, hashedPassword);
   }
 }
