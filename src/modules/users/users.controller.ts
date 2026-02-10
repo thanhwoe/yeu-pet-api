@@ -80,4 +80,10 @@ export class UsersController {
   async getProfile(@CurrentUser() user: accounts) {
     return this.usersService.findById(user.id);
   }
+
+  @Post('complete-onboarding')
+  @HttpCode(HttpStatus.OK)
+  async completeOnboarding(@CurrentUser() user: accounts) {
+    return this.usersService.completeOnboarding(user.id);
+  }
 }

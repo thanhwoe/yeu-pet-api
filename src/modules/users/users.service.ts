@@ -37,16 +37,7 @@ export class UsersService {
     return user;
   }
 
-  async findByEmail(email: string): Promise<accounts | null> {
-    return this.usersRepository.findByEmail(email);
-  }
-
-  async findByPhone(phone: string): Promise<accounts | null> {
-    return this.usersRepository.findByPhone(phone);
-  }
-
   async findByEmailOrPhone(identifier: string): Promise<accounts | null> {
-    this.logger.debug(`Finding user by identifier: ${identifier}`);
     return this.usersRepository.findByEmailOrPhone(identifier);
   }
 
@@ -73,25 +64,19 @@ export class UsersService {
   }
 
   async updateAccount(id: string, data: Partial<accounts>) {
-    const user = await this.usersRepository.findById(id);
-    if (!user) {
-      throw new NotFoundException('User not found');
-    }
+    await this.getUser({ id });
 
     return this.usersRepository.update(id, data);
   }
 
-  async verifyAccount(account_id: string, token: string) {
-    const user = await this.usersRepository.findById(account_id);
-    if (!user) {
-      throw new NotFoundException('User not found');
-    }
+  async verifyAccount(userId: string, token: string) {
+    const user = await this.getUser({ id: userId });
 
     if (user.is_verified) {
       throw new BadRequestException('Account already verified');
     }
 
-    const otpRecord = await this.otpTokensRepository.findByUserId(account_id);
+    const otpRecord = await this.otpTokensRepository.findByUserId(userId);
 
     if (!otpRecord || !otpRecord.token) {
       throw new BadRequestException(
@@ -107,8 +92,10 @@ export class UsersService {
       throw new BadRequestException('Invalid OTP code');
     }
 
-    await this.usersRepository.verifyAccount(account_id);
-    await this.otpTokensRepository.revokeToken(account_id, token);
+    await this.usersRepository.update(userId, {
+      is_verified: true,
+    });
+    await this.otpTokensRepository.revokeToken(userId, token);
 
     return { message: 'User verified successfully' };
   }
@@ -120,10 +107,7 @@ export class UsersService {
   }
 
   async updatePassword(userId: string, updatePasswordDto: UpdatePasswordDto) {
-    const user = await this.usersRepository.findAccount(userId);
-    if (!user) {
-      throw new NotFoundException('User not found');
-    }
+    const user = await this.getUser({ id: userId });
 
     const isPasswordValid = await this.validatePassword(
       updatePasswordDto.currentPassword,
@@ -154,10 +138,7 @@ export class UsersService {
   }
 
   async requestPasswordReset(dto: RequestResetPasswordDto) {
-    const user = await this.usersRepository.findByPhone(dto.phone);
-    if (!user) {
-      throw new NotFoundException('User not found');
-    }
+    const user = await this.getUser({ phone: dto.phone });
 
     await this.sendVerificationCode(user.id);
 
@@ -165,10 +146,7 @@ export class UsersService {
   }
 
   async resetPassword(dto: ResetPasswordDto) {
-    const user = await this.usersRepository.findByPhone(dto.phone);
-    if (!user) {
-      throw new NotFoundException('User not found');
-    }
+    const user = await this.getUser({ phone: dto.phone });
 
     const otpRecord = await this.otpTokensRepository.findByUserId(user.id);
     if (!otpRecord || otpRecord.token !== dto.code) {
@@ -187,11 +165,7 @@ export class UsersService {
   }
 
   async deactivateAccount(userId: string, password: string) {
-    const user = await this.usersRepository.findAccount(userId);
-
-    if (!user) {
-      throw new NotFoundException('User not found');
-    }
+    const user = await this.getUser({ id: userId });
 
     if (!user.is_active) {
       throw new BadRequestException('User is already deactivated');
@@ -209,12 +183,49 @@ export class UsersService {
     return this.usersRepository.delete(userId);
   }
 
-  private async sendVerificationCode(userId: string): Promise<void> {
-    const user = await this.usersRepository.findById(userId);
+  async completeOnboarding(id: string) {
+    const user = await this.getUser({ id });
+
+    if (user.onboarding_completed) {
+      throw new BadRequestException('User is already complete onboarding');
+    }
+
+    return this.usersRepository.update(id, {
+      onboarding_completed: true,
+    });
+  }
+
+  private async getUser({
+    email,
+    id,
+    phone,
+  }: {
+    id?: string;
+    phone?: string;
+    email?: string;
+  }) {
+    let user: accounts | null = null;
+
+    if (id) {
+      user = await this.usersRepository.findAccount(id);
+    }
+
+    if (email) {
+      user = await this.usersRepository.findByEmail(email);
+    }
+
+    if (phone) {
+      user = await this.usersRepository.findByPhone(phone);
+    }
 
     if (!user) {
       throw new NotFoundException('User not found');
     }
+    return user;
+  }
+
+  private async sendVerificationCode(userId: string): Promise<void> {
+    const user = await this.getUser({ id: userId });
 
     const otpRecord = await this.otpTokensRepository.findByUserId(user.id);
 

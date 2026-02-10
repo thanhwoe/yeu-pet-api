@@ -110,18 +110,4 @@ export class UsersRepository implements IUsersRepository {
 
     return count > 0;
   }
-
-  async updatePassword(id: string, hashedPassword: string): Promise<accounts> {
-    return this.prisma.accounts.update({
-      where: { id },
-      data: { password_hash: hashedPassword },
-    });
-  }
-
-  async verifyAccount(id: string): Promise<accounts> {
-    return this.prisma.accounts.update({
-      where: { id },
-      data: { is_verified: true },
-    });
-  }
 }
