@@ -17,6 +17,7 @@ import { Public } from '@app/decorators/public.decorator';
 import { CurrentUser } from '@app/decorators/current-user.decorator';
 import { AdminOnly } from '@app/decorators/admin.decorator';
 import { LocalAuthGuard } from '@app/guards/local-auth.guard';
+import { seconds, Throttle } from '@nestjs/throttler';
 
 @Controller('auth')
 export class AuthController {
@@ -30,6 +31,7 @@ export class AuthController {
   }
 
   @UseGuards(LocalAuthGuard)
+  @Throttle({ burst: { limit: 3, ttl: seconds(1) } })
   @Post('login')
   @Public()
   @HttpCode(HttpStatus.OK)

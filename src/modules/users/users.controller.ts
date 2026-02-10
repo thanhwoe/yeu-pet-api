@@ -18,6 +18,7 @@ import {
 } from './dto/reset-password.dto';
 import { Public } from '@app/decorators/public.decorator';
 import { DeleteUserDto } from './dto/delete-user.dto';
+import { minutes, Throttle } from '@nestjs/throttler';
 
 @Controller('users')
 export class UsersController {
@@ -33,6 +34,7 @@ export class UsersController {
   }
 
   @Post('resend-otp')
+  @Throttle({ burst: { limit: 3, ttl: minutes(1) } })
   @HttpCode(HttpStatus.OK)
   async resendOtp(@CurrentUser() user: accounts) {
     return this.usersService.resendVerificationCode(user.id);
@@ -49,6 +51,7 @@ export class UsersController {
 
   @Post('password/request')
   @Public()
+  @Throttle({ burst: { limit: 3, ttl: minutes(1) } })
   @HttpCode(HttpStatus.OK)
   async requestPasswordReset(
     @Body() requestResetPasswordDto: RequestResetPasswordDto,
