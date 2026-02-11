@@ -16,6 +16,7 @@ model accounts {
   password_hash           String            @db.VarChar(255)
   phone                   String            @unique @db.VarChar(20)
   avatar_url              String?
+  avatar_id               String?
   role                    user_role         @default(user)
   onboarding_completed    Boolean           @default(false)
   subscription            subscription_tier @default(free)

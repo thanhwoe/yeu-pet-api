@@ -10,6 +10,7 @@ import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { OtpModule } from './modules/otp/otp.module';
 import { ThrottlerModule, minutes, seconds } from '@nestjs/throttler';
 import { CustomThrottlerGuard } from './guards/throttler.guard';
+import { SharedModule } from './modules/shared/shared.module';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { CustomThrottlerGuard } from './guards/throttler.guard';
     UsersModule,
     PrismaModule,
     OtpModule,
+    SharedModule,
   ],
   controllers: [AppController],
   providers: [

@@ -18,6 +18,9 @@ import {
   RequestResetPasswordDto,
   ResetPasswordDto,
 } from './dto/reset-password.dto';
+import { UpdateProfileDto } from './dto/update-profile.dto';
+import { FileUploadService } from '../shared/file-upload/file-upload.service';
+import { FILE_UPLOAD_JOBS } from '../shared/file-upload/file-upload.jobs';
 
 @Injectable()
 export class UsersService {
@@ -27,6 +30,7 @@ export class UsersService {
     private readonly usersRepository: UsersRepository,
     private readonly otpService: OtpService,
     private readonly otpTokensRepository: OtpTokensRepository,
+    private readonly fileUploadService: FileUploadService,
   ) {}
 
   async findById(id: string) {
@@ -192,6 +196,44 @@ export class UsersService {
 
     return this.usersRepository.update(id, {
       onboarding_completed: true,
+    });
+  }
+
+  async updateProfile(
+    userId: string,
+    updateProfileDto: UpdateProfileDto,
+    avatarFile?: Express.Multer.File,
+  ) {
+    const user = await this.getUser({ id: userId });
+
+    // Check email existed
+    if (updateProfileDto.email && updateProfileDto.email !== user.email) {
+      const emailExists = await this.usersRepository.existsByEmail(
+        updateProfileDto.email,
+      );
+      if (emailExists) {
+        throw new ConflictException('Email already exists');
+      }
+    }
+
+    // Handle avatar upload
+    if (avatarFile) {
+      await this.fileUploadService.addUploadJob({
+        jobName: FILE_UPLOAD_JOBS.USER_AVATAR,
+        file: avatarFile,
+        options: {
+          userId,
+          folder: `users/${userId}`,
+          oldFileId: user.avatar_id || undefined,
+        },
+      });
+    }
+
+    // Update user information
+    return this.usersRepository.update(userId, {
+      first_name: updateProfileDto.firstName,
+      last_name: updateProfileDto.lastName,
+      email: updateProfileDto.email,
     });
   }
 

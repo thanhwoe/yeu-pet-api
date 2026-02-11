@@ -80,6 +80,7 @@ export const AccountsScalarFieldEnum = {
   password_hash: 'password_hash',
   phone: 'phone',
   avatar_url: 'avatar_url',
+  avatar_id: 'avatar_id',
   role: 'role',
   onboarding_completed: 'onboarding_completed',
   subscription: 'subscription',

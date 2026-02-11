@@ -3,11 +3,12 @@ import { UsersService } from './users.service';
 import { UsersController } from './users.controller';
 import { UsersRepository } from './users.repository';
 import { OtpModule } from '../otp/otp.module';
+import { SharedModule } from '../shared/shared.module';
 
 @Module({
   controllers: [UsersController],
   providers: [UsersService, UsersRepository],
-  imports: [OtpModule],
+  imports: [OtpModule, SharedModule],
   exports: [UsersService],
 })
 export class UsersModule {}
