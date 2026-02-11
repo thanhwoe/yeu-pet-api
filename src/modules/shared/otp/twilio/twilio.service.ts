@@ -1,10 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import twilio from 'twilio';
-import crypto from 'node:crypto';
 
 @Injectable()
-export class OtpService {
+export class TwilioService {
   private readonly twilioClient: twilio.Twilio;
   constructor(private readonly configService: ConfigService) {
     this.twilioClient = twilio(
@@ -13,15 +12,7 @@ export class OtpService {
     );
   }
 
-  private generateOtp(): string {
-    // Generate a 6-digit OTP
-    const otp = crypto.randomInt(100000, 999999).toString();
-    return otp;
-  }
-
-  async sendOtpToMobile(phoneNumber: string): Promise<string> {
-    const otp = this.generateOtp();
-
+  async sendOtp(phoneNumber: string, otp: string): Promise<string> {
     // const expirationTime = this.configService.getOrThrow<number>(
     //   'OTP_EXPIRATION_MINUTES',
     // );

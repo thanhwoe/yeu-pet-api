@@ -10,9 +10,7 @@ import { accounts } from '@app/generated/prisma/client';
 import { UsersRepository } from './users.repository';
 import { CreateUserDto } from './dto/create-user.dto';
 import * as bcrypt from 'bcryptjs';
-import { OtpService } from '../otp/otp.service';
 import dayjs from 'dayjs';
-import { OtpTokensRepository } from '../otp/otp-tokens.repository';
 import { UpdatePasswordDto } from './dto/update-password.dto';
 import {
   RequestResetPasswordDto,
@@ -21,6 +19,7 @@ import {
 import { UpdateProfileDto } from './dto/update-profile.dto';
 import { FileUploadService } from '../shared/file-upload/file-upload.service';
 import { FILE_UPLOAD_JOBS } from '../shared/file-upload/file-upload.jobs';
+import { OtpService } from '../shared/otp/otp.service';
 
 @Injectable()
 export class UsersService {
@@ -29,7 +28,6 @@ export class UsersService {
   constructor(
     private readonly usersRepository: UsersRepository,
     private readonly otpService: OtpService,
-    private readonly otpTokensRepository: OtpTokensRepository,
     private readonly fileUploadService: FileUploadService,
   ) {}
 
@@ -80,7 +78,7 @@ export class UsersService {
       throw new BadRequestException('Account already verified');
     }
 
-    const otpRecord = await this.otpTokensRepository.findByUserId(userId);
+    const otpRecord = await this.otpService.findByUserId(userId);
 
     if (!otpRecord || !otpRecord.token) {
       throw new BadRequestException(
@@ -99,7 +97,7 @@ export class UsersService {
     await this.usersRepository.update(userId, {
       is_verified: true,
     });
-    await this.otpTokensRepository.revokeToken(userId, token);
+    await this.otpService.revokeToken(userId, token);
 
     return { message: 'User verified successfully' };
   }
@@ -152,7 +150,7 @@ export class UsersService {
   async resetPassword(dto: ResetPasswordDto) {
     const user = await this.getUser({ phone: dto.phone });
 
-    const otpRecord = await this.otpTokensRepository.findByUserId(user.id);
+    const otpRecord = await this.otpService.findByUserId(user.id);
     if (!otpRecord || otpRecord.token !== dto.code) {
       throw new BadRequestException('Invalid or expired OTP code');
     }
@@ -163,7 +161,7 @@ export class UsersService {
       password_hash: hashedPassword,
     });
 
-    await this.otpTokensRepository.revokeToken(user.id, dto.code);
+    await this.otpService.revokeToken(user.id, dto.code);
 
     return { message: 'Password reset successfully' };
   }
@@ -269,7 +267,7 @@ export class UsersService {
   private async sendVerificationCode(userId: string): Promise<void> {
     const user = await this.getUser({ id: userId });
 
-    const otpRecord = await this.otpTokensRepository.findByUserId(user.id);
+    const otpRecord = await this.otpService.findByUserId(user.id);
 
     if (otpRecord && dayjs().isBefore(otpRecord.expires_at)) {
       const wait = dayjs(otpRecord.expires_at).diff(dayjs(), 'second');
@@ -279,8 +277,14 @@ export class UsersService {
       );
     }
 
+    // const otp = await this.otpService.sendOtpToEmail(
+    //   user.email ?? 'thanhwoe@gmail.com',
+    //   user.first_name ?? 'test',
+    // );
+
     const otp = await this.otpService.sendOtpToMobile(user.phone);
-    await this.otpTokensRepository.upsertToken(userId, otp);
+
+    await this.otpService.upsertToken(userId, otp);
   }
 
   private async hashPassword(value: string) {

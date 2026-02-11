@@ -7,7 +7,6 @@ import { UsersModule } from './modules/users/users.module';
 import { PrismaModule } from './database/prisma/prisma.module';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
-import { OtpModule } from './modules/otp/otp.module';
 import { ThrottlerModule, minutes, seconds } from '@nestjs/throttler';
 import { CustomThrottlerGuard } from './guards/throttler.guard';
 import { SharedModule } from './modules/shared/shared.module';
@@ -36,7 +35,6 @@ import { SharedModule } from './modules/shared/shared.module';
     AuthModule,
     UsersModule,
     PrismaModule,
-    OtpModule,
     SharedModule,
   ],
   controllers: [AppController],
